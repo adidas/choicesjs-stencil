@@ -1,0 +1,70 @@
+{
+  "name": "choicesjs-stencil",
+  "version": "1.0.0",
+  "description": "Select Web Component which wraps ChoicesJS library using StencilJS",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/adidas/choicesjs-stencil.git"
+  },
+  "license": "MIT",
+  "main": "dist/index.js",
+  "module": "dist/esm/es5/index.js",
+  "types": "dist/types/components.d.ts",
+  "collection": "dist/collection/collection-manifest.json",
+  "scripts": {
+    "start": "stencil build --dev --watch --serve",
+    "clean": "npm run clean:dist && npm run clean:doc && npm run clean:example && npm run clean:test",
+    "clean:dist": "rimraf dist && rimraf src/components.d.ts",
+    "clean:doc": "rimraf docs",
+    "clean:example": "rimraf example",
+    "clean:test": "rimraf test/results",
+    "build": "npm run build:min",
+    "build:dev": "stencil build --dev --watch",
+    "build:min": "stencil build",
+    "doc": "typedoc --mode file --readme ./README.md --out ./docs ./src",
+    "lint": "npm run lint:src && npm run lint:test",
+    "lint:src": "tslint --config ./tslint.json --project ./tsconfig.json",
+    "lint:test": "tslint --config ./tslint.json --project ./test/tsconfig.json",
+    "test": "npm run test:unit",
+    "test:unit": "jest --no-cache --config jest.config.js",
+    "test:coverage": "npm run test:coverage:unit",
+    "test:coverage:unit": "npm run test:unit -- --coverage"
+  },
+  "peerDependencies": {
+    "choices.js": "~3.0.4"
+  },
+  "devDependencies": {
+    "@stencil/core": "0.13.0-14",
+    "@stencil/sass": "0.1.0",
+    "@stencil/utils": "0.0.5",
+    "@types/jest": "21.1.8",
+    "choices.js": "3.0.4",
+    "jest": "21.2.1",
+    "jest-dot-reporter": "1.0.3",
+    "pixelmatch": "4.0.2",
+    "rimraf": "2.6.2",
+    "tslint": "5.11.0",
+    "tslint-config-adidas": "1.0.1",
+    "tslint-eslint-rules": "5.4.0",
+    "typedoc": "0.12.0",
+    "workbox-build": "3.4.1"
+  },
+  "optionalDependencies": {
+    "fsevents": "1.2.4"
+  },
+  "keywords": [
+    "choicesjs",
+    "select",
+    "stenciljs",
+    "web-component"
+  ],
+  "files": [
+    "dist",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}

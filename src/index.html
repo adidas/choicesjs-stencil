@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>ChoicesJS Web Component (dev)</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/choices.js/3.0.4/choices.js"></script>
+    <script src="/build/choicesjsstencil.js"></script>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        font-size: 16px;
+        padding: .75rem;
+      }
+      html, body {
+        width: 100%;
+        margin: 0;
+      }
+      choicesjs-stencil {
+        position: relative;
+        width: 100%;
+        height: auto;
+      }
+      .select {
+        padding: 1rem 0;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>ChoicesJS Web Component (dev example)</h2>
+    <div class="select">
+      <header>Text / Tags</header>
+      <choicesjs-stencil type="text"></choicesjs-stencil>
+    </div>
+    <div class="select">
+      <header>Select / Dropdown</header>
+      <choicesjs-stencil type="single"></choicesjs-stencil>
+    </div>
+    <div class="select">
+      <header>Multiselect</header>
+      <choicesjs-stencil type="multiple"></choicesjs-stencil>
+    </div>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        var choices = [
+          { 'value': 'superstar', 'label': 'Superstar', 'selected': false, 'disabled': false },
+          { 'value': 'adizero', 'label': 'adizero', 'selected': false, 'disabled': false },
+          { 'value': 'stansmith', 'label': 'Stan Smith', 'selected': true, 'disabled': false },
+          { 'value': 'gazelle', 'label': 'Gazelle', 'selected': false, 'disabled': false },
+          { 'value': 'ultraboost', 'label': 'ultraboost', 'selected': false, 'disabled': false },
+          { 'value': 'nmd', 'label': 'NMD', 'selected': false, 'disabled': false },
+          { 'value': 'yeezy', 'label': 'YEEZY', 'selected': false, 'disabled': false },
+          { 'value': 'campus', 'label': 'Campus', 'selected': false, 'disabled': false },
+          { 'value': 'zx500', 'label': 'ZX 500', 'selected': false, 'disabled': true },
+          { 'value': 'samba', 'label': 'Samba', 'selected': false, 'disabled': false },
+          { 'value': 'predator', 'label': 'Predator', 'selected': false, 'disabled': false },
+          { 'value': 'munchen', 'label': 'Munchen', 'selected': false, 'disabled': false },
+          { 'value': 'zxflux', 'label': 'ZX Flux', 'selected': false, 'disabled': false },
+          { 'value': 'eqt', 'label': 'EQT', 'selected': false, 'disabled': false },
+          { 'value': 'solar', 'label': 'Solar', 'selected': false, 'disabled': false },
+          { 'value': 'copa', 'label': 'Copa', 'selected': false, 'disabled': true },
+          { 'value': 'terrex', 'label': 'Terrex', 'selected': false, 'disabled': false },
+          { 'value': 'pureboost', 'label': 'pureboost', 'selected': false, 'disabled': false },
+          { 'value': 'dragon', 'label': 'Dragon', 'selected': false, 'disabled': false },
+          { 'value': 'yung', 'label': 'YUNG', 'selected': false, 'disabled': false },
+          { 'value': 'deerupt', 'label': 'Deerupt', 'selected': false, 'disabled': false },
+          { 'value': 'kamanda', 'label': 'kamanda', 'selected': false, 'disabled': false }
+        ];
+        var events = [
+          'addItem', 'removeItem', 'highlightItem', 'unhighlightItem',
+          'choice', 'change', 'search', 'showDropdown', 'hideDropdown'
+        ];
+
+        var selectText = document.querySelector('choicesjs-stencil[type=text]');
+        var selectSingle = document.querySelector('choicesjs-stencil[type=single]');
+        var selectMultiple = document.querySelector('choicesjs-stencil[type=multiple]');
+
+        selectSingle.choices = choices;
+        selectMultiple.choices = choices;
+
+        [ selectText, selectSingle, selectMultiple ].forEach(function(select) {
+          select.placeholder = true;
+          select.placeholderValue = 'type...';
+
+          events.forEach(function(event) {
+            select.addEventListener(event, function(data) {
+              console.log(event, data.detail);
+            });
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

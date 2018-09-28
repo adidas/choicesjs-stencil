@@ -1,0 +1,25 @@
+# Untracked general purpose files:
+.DS_Store
+.idea
+.npmrc
+.project
+.settings
+.vscode
+*.code-*
+*.log
+*.tmp
+*.orig
+*.sublime-*
+*.swp
+
+# Untracked general purpose directories:
+.stencil
+dist
+docs
+example
+node_modules
+www
+
+# Untracked application files and directories:
+src/components.d.ts
+test/results
