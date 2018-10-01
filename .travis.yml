@@ -11,8 +11,8 @@ script:
 - npm run build
 - npm run test
 - if [ "$TRAVIS_BRANCH" == "master" ]; then
-    npm run doc
-    npm run copy:example
+    npm run doc;
+    npm run copy:example;
   fi
 
 deploy:
