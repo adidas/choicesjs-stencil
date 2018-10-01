@@ -82,6 +82,8 @@
         [ selectText, selectSingle, selectMultiple ].forEach(function(select) {
           select.placeholder = true;
           select.placeholderValue = 'type...';
+          select.removeItems = true;
+          select.removeItemButton = true;
 
           events.forEach(function(event) {
             select.addEventListener(event, function(data) {

@@ -1,4 +1,5 @@
 const { sass } = require('@stencil/sass');
+const sassInlineSvg = require('sass-inline-svg');
 
 exports.config = {
   namespace: 'ChoicesJSStencil',
@@ -16,6 +17,10 @@ exports.config = {
     }
   ],
   plugins: [
-    sass()
+    sass({
+      functions: {
+        'svg-inline': sassInlineSvg('node_modules/choices.js/assets/icons')
+      }
+    })
   ]
 };
