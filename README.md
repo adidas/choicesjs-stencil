@@ -2,15 +2,11 @@
 
 # ChoicesJS Web Component
 
-Select Web Component. It just wraps [ChoicesJS][choicesjs] library using [StencilJS][stenciljs].
+Select component which just wraps [ChoicesJS][choicesjs] in a real [Web Component][web-component]. It has been created using [StencilJS][stenciljs], and written with [_Typescript_][typescript] and [_JSX_][jsx].
 
-The demo is available at [**adidas.github.io/choicesjs-stencil**][demo].
+This component allows the user to select from dropdowns, to browser between multiple options, to add tags to an input, etc.
 
-The Select component allows a user to select from dropdowns, browser between multiple options, add tags to an input, etc...
-
-This is a real [_Web Component_][web-component] which has been created with [_StencilJS_ library][stenciljs].
-
-It is written using [_Typescript_][typescript] with [_JSX_][jsx].
+Play with it on the [**demo**][demo] page.
 
 ## Use cases
 
@@ -208,7 +204,7 @@ For further information open the [adidas terms and conditions][terms-and-conditi
 
 [choicesjs]: https://github.com/jshjohnson/Choices
 [choicesjs-documentation]: https://github.com/jshjohnson/Choices/tree/master
-[demo]: https://adidas.github.io/choicesjs-stencil
+[demo]: https://adidas.github.io/choicesjs-stencil/
 [jest]: https://jestjs.io/
 [jsx]: https://jsx.github.io/
 [peer-dependencies]: https://docs.npmjs.com/files/package.json#peerdependencies
