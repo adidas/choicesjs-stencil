@@ -1,0 +1,11 @@
+.idea
+.gitattributes
+.gitignore
+.stencil
+index.html
+jestconfig.json
+tsconfig.json
+tslint.json
+docs
+node_modules
+test
