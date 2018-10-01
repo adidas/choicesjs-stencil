@@ -10,10 +10,10 @@ script:
 - npm run lint
 - npm run build
 - npm run test
-
-before_deploy:
-- npm run doc
-- npm run copy:example
+- if [ "$TRAVIS_BRANCH" == "master" ]; then
+    npm run doc
+    npm run copy:example
+  fi
 
 deploy:
 - provider: npm
