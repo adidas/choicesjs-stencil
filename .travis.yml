@@ -1,0 +1,30 @@
+dist: trusty
+language: node_js
+node_js:
+- "10"
+
+install:
+- npm install
+
+script:
+- npm run lint
+- npm run build
+- npm run test
+
+before_deploy:
+- npm run doc
+- npm run copy:example
+
+deploy:
+- provider: npm
+  skip_cleanup: true
+  email: uxteam@adidas-group.com
+  api_key: $NPM_TOKEN
+  on:
+    branch: master
+- provider: pages
+  skip-cleanup: true
+  local-dir: ./example
+  github-token: $GITHUB_TOKEN
+  on:
+    branch: master

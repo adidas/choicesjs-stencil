@@ -1,6 +1,10 @@
-# Choices Web Component
+![](./logo.png)
 
-Select Web Component. It just wraps [Choices.js][choicesjs] library using StencilJS.
+# ChoicesJS Web Component
+
+Select Web Component. It just wraps [ChoicesJS][choicesjs] library using [StencilJS][stenciljs].
+
+The demo is available at [**adidas.github.io/choicesjs-stencil**][demo].
 
 The Select component allows a user to select from dropdowns, browser between multiple options, add tags to an input, etc...
 
@@ -10,7 +14,7 @@ It is written using [_Typescript_][typescript] with [_JSX_][jsx].
 
 ## Use cases
 
-The purpose of this project is to create a simple Web Component wrapper from the [Choices.js][choicesjs] library.
+The purpose of this project is to create a simple Web Component wrapper from the [ChoicesJS][choicesjs] library.
 
 All the available use cases of the original library can be perform using this Web Component.
 
@@ -20,7 +24,7 @@ For more information read the [library documentation][choicesjs-documentation].
 
 [NodeJS and NPM][node] are required to work with the repository.
 
-The library is based on [Choices.js][choicesjs], but it is not bundle along with the wrapper. It has been defined as part of [`peerDependencies`][peer-dependencies], therefore it has to be included in your own `dependencies`.
+The library is based on [ChoicesJS][choicesjs], but it is not bundle along with the wrapper. It has been defined as part of [`peerDependencies`][peer-dependencies], therefore it has to be included in your own `dependencies`.
 
 This dependency can be added to the bundle as external library, or it can just be added to the page via CDN script:
 
@@ -204,6 +208,7 @@ For further information open the [adidas terms and conditions][terms-and-conditi
 
 [choicesjs]: https://github.com/jshjohnson/Choices
 [choicesjs-documentation]: https://github.com/jshjohnson/Choices/tree/master
+[demo]: https://adidas.github.io/choicesjs-stencil
 [jest]: https://jestjs.io/
 [jsx]: https://jsx.github.io/
 [peer-dependencies]: https://docs.npmjs.com/files/package.json#peerdependencies

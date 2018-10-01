@@ -1,0 +1,8 @@
+imageUrl: https://raw.githubusercontent.com/adidas/choicesjs-stencil/master/logo.png
+backgroundColor: '#eef5cc'
+keywords:
+  - select
+  - multiselect
+  - choicesjs
+  - stenciljs
+  - webcomponent

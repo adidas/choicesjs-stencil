@@ -1,1 +1,17 @@
 @import 'node_modules/choices.js/assets/styles/scss/choices.scss';
+
+$choices-selector: 'choices';
+$choices-button-icon-path: '';
+
+.#{ $choices-selector }[data-type*="select-one"] {
+  .#{ $choices-selector }__button {
+    background-image: svg-inline('cross-inverse.svg');
+  }
+}
+
+.#{ $choices-selector }[data-type*="select-multiple"],
+.#{ $choices-selector }[data-type*="text"]  {
+  .#{ $choices-selector }__button {
+    background-image: svg-inline('cross.svg');
+  }
+}
