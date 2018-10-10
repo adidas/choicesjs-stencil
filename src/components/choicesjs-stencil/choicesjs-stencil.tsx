@@ -48,7 +48,7 @@ export class ChoicesJSStencil implements IChoicesProps, IChoicesMethods {
   @Prop() public shouldSort: boolean;
   @Prop() public shouldSortItems: boolean;
   @Prop() public sortFilter: SortFn;
-  @Prop() public placeholder: boolean;
+  @Prop() public placeholder: boolean | string;
   @Prop() public placeholderValue: string;
   @Prop() public searchPlaceholderValue: string;
   @Prop() public prependValue: string;
@@ -226,6 +226,11 @@ export class ChoicesJSStencil implements IChoicesProps, IChoicesMethods {
   }
 
   protected render(): any {
+    const attributes = {
+      'data-selector': 'root',
+      'name': this.name || null
+    };
+
     // destroy choices element to restore previous dom structure
     // so vdom can replace the element correctly
     this.destroy();
@@ -233,20 +238,20 @@ export class ChoicesJSStencil implements IChoicesProps, IChoicesMethods {
     switch (this.type) {
     case 'single':
       this.element =
-        <select data-selector="root" name={ this.name || 'single' }>
+        <select { ...attributes }>
           { this.value ? createSelectOptions(this.value) : null }
         </select>;
       break;
     case 'multiple':
       this.element =
-        <select multiple data-selector="root" name={ this.name || 'multiple' }>
+        <select multiple { ...attributes }>
           { this.value ? createSelectOptions(this.value) : null }
         </select>;
       break;
     case 'text':
     default:
       this.element =
-        <input type="text" data-selector="root" value={ this.value } name={ this.name || 'text' }/>;
+        <input type="text" value={ this.value } { ...attributes }/>;
       break;
     }
 
@@ -278,8 +283,8 @@ export class ChoicesJSStencil implements IChoicesProps, IChoicesMethods {
       shouldSort: this.shouldSort,
       shouldSortItems: this.shouldSortItems,
       sortFilter: this.sortFilter,
-      placeholder: this.placeholder,
-      placeholderValue: this.placeholderValue,
+      placeholder: !!this.placeholder || !!this.placeholderValue,
+      placeholderValue: this.placeholderValue || (typeof this.placeholder === 'string' ? this.placeholder : ''),
       searchPlaceholderValue: this.searchPlaceholderValue,
       prependValue: this.prependValue,
       appendValue: this.appendValue,

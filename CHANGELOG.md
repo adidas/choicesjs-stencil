@@ -2,6 +2,7 @@
 
 - Fixed component to be able to work within a `<form/>` element.
 - Fixed `getValue` public method.
+- Fixed `placeholder` property when it is used as element attribute.
 - Updated dev and public examples:
   - Wrap select elements in a form to get their values.
   - Show the values of the select elements.

@@ -123,7 +123,7 @@ export interface IChoicesProps {
   regexFilter?: RegExp;
   shouldSort?: boolean;
   shouldSortItems?: boolean;
-  placeholder?: boolean;
+  placeholder?: boolean | string;
   placeholderValue?: string;
   searchPlaceholderValue?: string;
   prependValue?: string;

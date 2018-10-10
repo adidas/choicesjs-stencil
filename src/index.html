@@ -57,7 +57,7 @@
     <form name="choicesjs-stencil">
       <div class="select">
         <header>Text / Tags</header>
-        <choicesjs-stencil name="text" type="text" value="Superstar,Gazelle"></choicesjs-stencil>
+        <choicesjs-stencil name="text" type="text" value="Superstar,Gazelle" placeholder="add shoe..."></choicesjs-stencil>
       </div>
       <div class="select">
         <header>Select / Dropdown</header>
@@ -129,9 +129,11 @@
 
         selectMultiple.choices = choices;
 
-        [ selectText, selectSingle, selectMultiple ].forEach(function(select) {
+        [ selectSingle, selectMultiple ].forEach(function(select) {
           select.placeholder = true;
           select.placeholderValue = 'type...';
+        });
+        [ selectText, selectSingle, selectMultiple ].forEach(function(select) {
           select.removeItems = true;
           select.removeItemButton = true;
 
