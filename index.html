@@ -16,10 +16,16 @@
       body {
         padding-bottom: 4rem;
       }
-      choicesjs-stencil {
+      .select-container {
+        display: inline-flex;
+      }
+      .select-container .select {
         position: relative;
         width: 100%;
         height: auto;
+      }
+      .select-container .btn {
+        margin-left: 1rem;
       }
       .container-fluid {
         margin-bottom: 1rem;
@@ -46,6 +52,17 @@
       .navbar {
         min-height: auto;
       }
+      .values-container {
+        background-color: #f9f9f9;
+        border-radius: 4px;
+        font-size: .85rem;
+        padding: .5rem;
+        margin-bottom: .5rem;
+      }
+      .values-container .values-container__text {
+        word-break: break-all;
+        margin: 0;
+      }
     </style>
     <style id="customStyles"></style>
   </head>
@@ -55,15 +72,19 @@
         <h2 class="col-sm-12">ChoicesJS Web Component: test page</h2>
       </div>
       <div class="row">
-        <div class="col-sm-12">
-          <choicesjs-stencil name="choicesjs-stencil"></choicesjs-stencil>
-        </div>
+        <form class="col-sm-12 select-container" name="choicesjs-stencil-form">
+          <choicesjs-stencil name="select" class="select"></choicesjs-stencil>
+          <button class="btn btn-primary" type="submit">Submit</button>
+        </form>
       </div>
     </div>
     <div class="container-fluid control-panel">
-      <form id="selectOptionsForm">
+      <form name="select-options-form">
         <div class="row">
           <div class="col-md-12">
+            <div class="pull-left values-container">
+              <p class="values-container__text"></p>
+            </div>
             <div class="form-group pull-right">
               <button class="btn btn-primary" type="submit">Apply</button>
               <button class="btn btn-default" type="reset">Reset</button>
@@ -514,7 +535,7 @@ return a.label.localeCompare(b.label);
               <h4 class="modal-title">Custom Styles</h4>
           </div>
           <div class="modal-body">
-            <form id="customStylesForm">
+            <form name="custom-styles-form">
               <div class="form-group">
                 <div class="row">
                   <div class="col-md-12">
@@ -583,7 +604,7 @@ return a.label.localeCompare(b.label);
           </div>
           <div class="modal-body">
             <h5 class="text-center pad-bottom">See full Fuse documentation in <a href="https://github.com/krisk/Fuse/tree/v2.7.4#options">GitHub</a>.</h5>
-            <form id="customSearchForm">
+            <form name="custom-search-form">
               <div class="form-group">
                 <div class="row">
                   <div class="col-md-6">
@@ -829,11 +850,41 @@ return a.label.localeCompare(b.label);
         }
 
         function toggleTypeDependentSections(type) {
-          typeDependencies.forEach(function(element) {
+          Array.from(typeDependencies).forEach(function(element) {
             element.classList.contains('type--' + type) ?
               element.classList.remove('hidden') :
               element.classList.add('hidden');
           });
+        }
+
+        function showValues(event) {
+          var valuesTextContainer = document.querySelector('.values-container p');
+          var form = new FormData(this);
+          var values = [];
+          var i, lng;
+
+          // forEach is not available in all browsers
+          if (typeof form.forEach === 'function') {
+            form.forEach(function(value, name) {
+              values.push(name + ': `' + value + '`') ;
+            });
+          } else {
+            for (i = 0, lng = this.length; i < lng; i++) {
+              if (this[i].value) {
+                values.push(this[i].name + ': `' + this[i].value + '`');
+              }
+            }
+          }
+
+          valuesTextContainer.innerHTML = values.join(' | ');
+          console.log('values', values);
+
+          event.preventDefault();
+          event.stopImmediatePropagation();
+        }
+
+        function resetValues() {
+          document.querySelector('.values-container p').innerHTML = '';
         }
 
         function handleChangeOptions(event) {
@@ -843,12 +894,14 @@ return a.label.localeCompare(b.label);
           event.stopImmediatePropagation();
 
           changeConfiguration(form);
+          resetValues();
         }
 
         function handleResetOptions() {
           var form = event.target;
 
           toggleTypeDependentSections('text');
+          resetValues();
 
           // delay configuration changes until form sections are ready
           setTimeout(function() {
@@ -878,9 +931,11 @@ return a.label.localeCompare(b.label);
           'addItem', 'removeItem', 'highlightItem', 'unhighlightItem',
           'choice', 'change', 'search', 'showDropdown', 'hideDropdown'
         ];
-        var selectOptionsForm = document.querySelector('#selectOptionsForm');
-        var customStylesForm = document.querySelector('#customStylesForm');
-        var customSearchForm = document.querySelector('#customSearchForm');
+
+        var choicesjsStencilForm = document.querySelector('form[name=choicesjs-stencil-form]');
+        var selectOptionsForm = document.querySelector('form[name=select-options-form]');
+        var customStylesForm = document.querySelector('form[name=custom-styles-form]');
+        var customSearchForm = document.querySelector('form[name=custom-search-form]');
         var customStyles = document.querySelector('#customStyles');
         var typeSelect = document.querySelector('select[name="type"]');
         var select = document.querySelector('choicesjs-stencil');
@@ -900,6 +955,7 @@ return a.label.localeCompare(b.label);
           });
         });
 
+        choicesjsStencilForm.onsubmit = showValues;
         selectOptionsForm.onsubmit = handleChangeOptions;
         selectOptionsForm.onreset = handleResetOptions;
         customStylesForm.onsubmit = handleChangeStyles;
