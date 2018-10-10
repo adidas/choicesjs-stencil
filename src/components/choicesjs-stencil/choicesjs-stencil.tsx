@@ -14,7 +14,7 @@ import {
   OnCreateTemplates,
   UniqueItemText
 } from './interfaces';
-import { filterObject, isDefined } from './utils';
+import { createSelectOptions, filterObject, isDefined } from './utils';
 
 @Component({
   tag: 'choicesjs-stencil',
@@ -22,6 +22,8 @@ import { filterObject, isDefined } from './utils';
 })
 export class ChoicesJSStencil implements IChoicesProps, IChoicesMethods {
   @Prop() public type?: 'single' | 'multiple' | 'text';
+  @Prop() public value: string;
+  @Prop() public name: string;
 
   @Prop() public silent: boolean;
   @Prop() public items: Array<any>;
@@ -78,6 +80,7 @@ export class ChoicesJSStencil implements IChoicesProps, IChoicesMethods {
   @Element() private readonly root: HTMLElement;
 
   private choice;
+  private element;
 
   @Method()
   public async highlightItem(item: Element, runEvent?: boolean) {
@@ -150,10 +153,8 @@ export class ChoicesJSStencil implements IChoicesProps, IChoicesMethods {
   }
 
   @Method()
-  public async getValue(valueOnly?: boolean) {
-    this.choice.getValue(valueOnly);
-
-    return this;
+  public async getValue(valueOnly?: boolean): Promise<string | Array<string>> {
+    return this.choice.getValue(valueOnly);
   }
 
   @Method()
@@ -225,26 +226,31 @@ export class ChoicesJSStencil implements IChoicesProps, IChoicesMethods {
   }
 
   protected render(): any {
-    let element;
-
     // destroy choices element to restore previous dom structure
     // so vdom can replace the element correctly
     this.destroy();
 
     switch (this.type) {
     case 'single':
-      element = <select data-selector="root"/>;
+      this.element =
+        <select data-selector="root" name={ this.name || 'single' }>
+          { this.value ? createSelectOptions(this.value) : null }
+        </select>;
       break;
     case 'multiple':
-      element = <select multiple data-selector="root"/>;
+      this.element =
+        <select multiple data-selector="root" name={ this.name || 'multiple' }>
+          { this.value ? createSelectOptions(this.value) : null }
+        </select>;
       break;
     case 'text':
     default:
-      element = <input type="text" data-selector="root"/>;
+      this.element =
+        <input type="text" data-selector="root" value={ this.value } name={ this.name || 'text' }/>;
       break;
     }
 
-    return element;
+    return this.element;
   }
 
   private init() {
@@ -296,6 +302,10 @@ export class ChoicesJSStencil implements IChoicesProps, IChoicesMethods {
   }
 
   private destroy() {
+    if (this.element) {
+      this.element = null;
+    }
+
     if (this.choice) {
       this.choice.destroy();
       this.choice = null;

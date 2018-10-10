@@ -45,7 +45,15 @@ Include the component in your application via HTML script:
 Use it as a new HTML element in your template:
 
 ```html
-<choicesjs-stencil values="foo, bar"></choicesjs-stencil>
+<choicesjs-stencil values="foo,bar"></choicesjs-stencil>
+```
+
+To be able to work with the component in a form it needs a name:
+
+```html
+<form name="form">
+  <choicesjs-stencil name="select" values="foo,bar"></choicesjs-stencil>
+</form>
 ```
 
 The component is also available as module to be loaded via module bundler:
