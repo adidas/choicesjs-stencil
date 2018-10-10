@@ -10,7 +10,8 @@
         box-sizing: border-box;
       }
       html {
-        font-size: 16px;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 14px;
         padding: .75rem;
       }
       html, body {
@@ -25,21 +26,53 @@
       .select {
         padding: 1rem 0;
       }
+      .submit {
+        text-align: center;
+      }
+      .btn {
+        background-color: #0d83ff;
+        border: none;
+        border-radius: 4px;
+        color: #fff;
+        font-size: 1rem;
+        padding: 8px 12px;
+        cursor: pointer;
+      }
+      .btn:hover {
+        box-shadow: 0 1px 2px 0 rgba(0,0,0,.5);
+      }
+      .values-container {
+        background-color: #f9f9f9;
+        padding: .5rem;
+        margin-top: 1rem;
+      }
+      .values-container .values-container__text {
+        word-break: break-all;
+        margin: 0;
+      }
     </style>
   </head>
   <body>
     <h2>ChoicesJS Web Component (dev example)</h2>
-    <div class="select">
-      <header>Text / Tags</header>
-      <choicesjs-stencil type="text"></choicesjs-stencil>
-    </div>
-    <div class="select">
-      <header>Select / Dropdown</header>
-      <choicesjs-stencil type="single"></choicesjs-stencil>
-    </div>
-    <div class="select">
-      <header>Multiselect</header>
-      <choicesjs-stencil type="multiple"></choicesjs-stencil>
+    <form name="choicesjs-stencil">
+      <div class="select">
+        <header>Text / Tags</header>
+        <choicesjs-stencil name="text" type="text" value="Superstar,Gazelle" placeholder="add shoe..."></choicesjs-stencil>
+      </div>
+      <div class="select">
+        <header>Select / Dropdown</header>
+        <choicesjs-stencil name="single" type="single" value="Superstar,Gazelle,Stan Smith,Campus"></choicesjs-stencil>
+      </div>
+      <div class="select">
+        <header>Multiselect</header>
+        <choicesjs-stencil name="multiple" type="multiple"></choicesjs-stencil>
+      </div>
+      <div class="submit">
+        <button type="submit" class="btn">submit</button>
+      </div>
+    </form>
+    <div class="values-container">
+      <p class="values-container__text"></p>
     </div>
     <script>
       document.addEventListener('DOMContentLoaded', function() {
@@ -76,12 +109,31 @@
         var selectSingle = document.querySelector('choicesjs-stencil[type=single]');
         var selectMultiple = document.querySelector('choicesjs-stencil[type=multiple]');
 
-        selectSingle.choices = choices;
+        var form = document.querySelector('form[name=choicesjs-stencil]');
+
+        form.addEventListener('submit', function(event) {
+          var valuesTextContainer = document.querySelector('.values-container p');
+          var form = new FormData(this);
+          var values = [];
+
+          form.forEach(function(value, name) {
+            values.push(name + ': `' + value + '`');
+          });
+
+          valuesTextContainer.innerHTML = values.join(' | ');
+          console.log('values', values);
+
+          event.preventDefault();
+          event.stopImmediatePropagation();
+        });
+
         selectMultiple.choices = choices;
 
-        [ selectText, selectSingle, selectMultiple ].forEach(function(select) {
+        [ selectSingle, selectMultiple ].forEach(function(select) {
           select.placeholder = true;
           select.placeholderValue = 'type...';
+        });
+        [ selectText, selectSingle, selectMultiple ].forEach(function(select) {
           select.removeItems = true;
           select.removeItemButton = true;
 
@@ -91,6 +143,12 @@
             });
           });
         });
+
+        // expose references
+        window.form = form;
+        window.selectText = selectText;
+        window.selectSingle = selectSingle;
+        window.selectMultiple = selectMultiple;
       });
     </script>
   </body>
