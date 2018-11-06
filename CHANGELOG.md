@@ -1,3 +1,10 @@
+## 1.1.1
+
+- Fixed placeholder behavior to avoid input dynamic width.
+- Added NPM and TravisCI badges in the README file.
+- Updated `@stencil/core`.
+- Removed `.meta.yml` file.
+
 # 1.1.0
 
 - Fixed component to be able to work within a `<form/>` element.
