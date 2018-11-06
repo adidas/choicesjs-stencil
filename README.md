@@ -1,3 +1,7 @@
+[![npm version](https://badge.fury.io/js/choicesjs-stencil.svg)](https://www.npmjs.com/package/choicesjs-stencil)
+
+[![Build Status](https://api.travis-ci.com/adidas/choicesjs-stencil.svg?branch=master)](https://travis-ci.com/adidas/choicesjs-stencil)
+
 ![](./logo.png)
 
 # ChoicesJS Web Component
