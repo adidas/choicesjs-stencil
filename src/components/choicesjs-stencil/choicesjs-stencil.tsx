@@ -34,7 +34,7 @@ export class ChoicesJSStencil implements IChoicesProps, IChoicesMethods {
   @Prop() public removeItems: boolean;
   @Prop() public removeItemButton: boolean;
   @Prop() public editItems: boolean;
-  @Prop() public duplicateItems: boolean;
+  @Prop() public duplicateItemsAllowed: boolean;
   @Prop() public delimiter: string;
   @Prop() public paste: boolean;
   @Prop() public searchEnabled: boolean;
@@ -47,7 +47,7 @@ export class ChoicesJSStencil implements IChoicesProps, IChoicesMethods {
   @Prop() public regexFilter: RegExp;
   @Prop() public shouldSort: boolean;
   @Prop() public shouldSortItems: boolean;
-  @Prop() public sortFilter: SortFn;
+  @Prop() public sortFn: SortFn;
   @Prop() public placeholder: boolean | string;
   @Prop() public placeholderValue: string;
   @Prop() public searchPlaceholderValue: string;
@@ -111,8 +111,8 @@ export class ChoicesJSStencil implements IChoicesProps, IChoicesMethods {
   }
 
   @Method()
-  public async removeItemsByValue(value: string) {
-    this.choice.removeItemsByValue(value);
+  public async removeActiveItemsByValue(value: string) {
+    this.choice.removeActiveItemsByValue(value);
 
     return this;
   }
@@ -165,8 +165,8 @@ export class ChoicesJSStencil implements IChoicesProps, IChoicesMethods {
   }
 
   @Method()
-  public async setValueByChoice(value: string | Array<string>) {
-    this.choice.setValueByChoice(value);
+  public async setChoiceByValue(value: string | Array<string>) {
+    this.choice.setChoiceByValue(value);
 
     return this;
   }
@@ -269,7 +269,7 @@ export class ChoicesJSStencil implements IChoicesProps, IChoicesMethods {
       removeItems: this.removeItems,
       removeItemButton: this.removeItemButton,
       editItems: this.editItems,
-      duplicateItems: this.duplicateItems,
+      duplicateItemsAllowed: this.duplicateItemsAllowed,
       delimiter: this.delimiter,
       paste: this.paste,
       searchEnabled: this.searchEnabled,
@@ -282,7 +282,7 @@ export class ChoicesJSStencil implements IChoicesProps, IChoicesMethods {
       regexFilter: this.regexFilter,
       shouldSort: this.shouldSort,
       shouldSortItems: this.shouldSortItems,
-      sortFilter: this.sortFilter,
+      sortFn: this.sortFn,
       placeholder: true,
       placeholderValue: this.placeholderValue || (typeof this.placeholder === 'string' && this.placeholder) || ' ',
       searchPlaceholderValue: this.searchPlaceholderValue,

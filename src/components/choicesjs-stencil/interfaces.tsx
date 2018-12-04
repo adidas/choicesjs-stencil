@@ -109,7 +109,7 @@ export interface IChoicesProps {
   removeItems?: boolean;
   removeItemButton?: boolean;
   editItems?: boolean;
-  duplicateItems?: boolean;
+  duplicateItemsAllowed?: boolean;
   delimiter?: string;
   paste?: boolean;
   searchEnabled?: boolean;
@@ -135,7 +135,7 @@ export interface IChoicesProps {
   itemSelectText?: string;
   addItemText?: string | AddItemTextFn;
   maxItemText?: string | MaxItemTextFn;
-  sortFilter?: SortFn;
+  sortFn?: SortFn;
   callbackOnInit?: OnInit;
   callbackOnCreateTemplates?: OnCreateTemplates;
 }
@@ -151,7 +151,7 @@ export type AjaxFn = (callback) => void;
 export interface IChoicesMethods {
   highlightAll();
   unhighlightAll();
-  removeItemsByValue(value);
+  removeActiveItemsByValue(value);
   removeActiveItems(excludedId);
   removeHighlightedItems();
   showDropdown();
@@ -160,7 +160,7 @@ export interface IChoicesMethods {
   setChoices(choices, value, label, replaceChoices);
   getValue(valueOnly);
   setValue(args);
-  setValueByChoice(value: string | Array<string>);
+  setChoiceByValue(value: string | Array<string>);
   clearStore();
   clearInput();
   disable();
