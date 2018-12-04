@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/choices.js/3.0.4/choices.js"></script>
+    <script src="https://rawgit.com/jshjohnson/Choices/v4.1.3/public/assets/scripts/choices.js"></script>
     <script src="dist/choicesjsstencil.js"></script>
     <style>
       html {
@@ -217,9 +217,9 @@
               </span>
             </div>
             <div class="form-group type type--text type--multiple">
-              <label for="duplicateItems">
+              <label for="duplicateItemsAllowed">
                 Duplicate items
-                <input type="checkbox" name="duplicateItems" checked>
+                <input type="checkbox" name="duplicateItemsAllowed" checked>
               </label>
               <span class="description" data-toggle="tooltip" title="Whether each inputted/chosen item should be unique.">
                 <span class="glyphicon glyphicon glyphicon-question-sign"></span>
@@ -501,16 +501,16 @@
               </a>
             </div>
             <div class="form-group type type--single type--multiple">
-              <label for="sortFilter">
-                sortFilter(a, b) {
+              <label for="sortFn">
+                sortFn(a, b) {
               </label>
               <span class="description" data-toggle="tooltip" title="The function that will sort choices and items before they are displayed (unless a user is searching). By default choices and items are sorted by alphabetical order.<br/><br/>The function takes two parameters: a, b.">
                 <span class="glyphicon glyphicon glyphicon-question-sign"></span>
               </span>
-              <textarea class="form-control textarea--vertical" name="sortFilter" rows="2">
+              <textarea class="form-control textarea--vertical" name="sortFn" rows="2">
 return a.label.localeCompare(b.label);
               </textarea>
-              <label for="sortFilter">}</label>
+              <label for="sortFn">}</label>
             </div>
           </div>
         </div>
@@ -804,7 +804,7 @@ return a.label.localeCompare(b.label);
                 return template.replace('${maxItemCount}', maxItemCount);
               };
             },
-            sortFilter: function(value) {
+            sortFn: function(value) {
               return new Function('a', 'b', value.trim());
             },
             callbackOnInit: function(value) {
