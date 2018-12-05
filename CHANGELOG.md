@@ -1,3 +1,7 @@
+## 1.2.1
+
+- Fixed Travis configuration to publish and create documentation on release tags.
+
 # 1.2.0
 
 - Updated to Choices.js v4.1.3. Changes:
