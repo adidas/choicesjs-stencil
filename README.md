@@ -26,10 +26,10 @@ For more information read the [library documentation][choicesjs-documentation].
 
 The library is based on [ChoicesJS][choicesjs], but it is not bundle along with the wrapper. It has been defined as part of [`peerDependencies`][peer-dependencies], therefore it has to be included in your own `dependencies`.
 
-This dependency can be added to the bundle as external library, or it can just be added to the page via CDN script:
+This dependency can be added to the bundle as external library, or it can just be added to the page via GitHub script:
 
 ```html
-<script src="https://cdnjs.cloudflare.com/ajax/libs/choices.js/3.0.4/choices.js"></script>
+<script src="https://rawgit.com/jshjohnson/Choices/v4.1.3/public/assets/scripts/choices.js"></script>
 ```
 
 ## Installation and running
