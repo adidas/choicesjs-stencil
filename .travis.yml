@@ -7,10 +7,11 @@ install:
 - npm install
 
 script:
+- export TAG_REGEX=^[0-9]+\.[0-9]+\.[0-9]+
 - npm run lint
 - npm run build
 - npm run test
-- if [ "$TRAVIS_BRANCH" == "master" ]; then
+- if [ ${TRAVIS_TAG} =~ ${TAG_REGEX} ]; then
     npm run doc;
     npm run copy:example;
   fi
@@ -22,11 +23,11 @@ deploy:
   api_key: $NPM_TOKEN
   on:
     tags: true
-    condition: $TRAVIS_TAG =~ ^[0-9]+\.[0-9]+\.[0-9]+
+    condition: $TRAVIS_TAG =~ $TAG_REGEX
 - provider: pages
   skip-cleanup: true
   local-dir: ./example
   github-token: $GITHUB_TOKEN
   on:
     tags: true
-    condition: $TRAVIS_TAG =~ ^[0-9]+\.[0-9]+\.[0-9]+
+    condition: $TRAVIS_TAG =~ $TAG_REGEX
