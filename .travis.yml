@@ -11,7 +11,7 @@ script:
 - npm run lint
 - npm run build
 - npm run test
-- if [ ${TRAVIS_TAG} =~ ${TAG_REGEX} ]; then
+- if [ "$TRAVIS_TAG" =~ "$TAG_REGEX" ]; then
     npm run doc;
     npm run copy:example;
   fi
