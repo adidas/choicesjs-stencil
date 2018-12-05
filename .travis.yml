@@ -8,11 +8,10 @@ install:
 
 script:
 - export TAG_REGEX=^[0-9]+\.[0-9]+\.[0-9]+
-- echo "Build tag: ${TRAVIS_TAG}"
 - npm run lint
 - npm run build
 - npm run test
-- if [[ $TRAVIS_TAG =~ $TAG_REGEX ]]
+- if [[ $TRAVIS_TAG =~ $TAG_REGEX ]];
   then
     npm run doc;
     npm run copy:example;
