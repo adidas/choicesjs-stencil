@@ -1,3 +1,5 @@
+- Decreased target build to es2015.
+
 ## 1.2.1
 
 - Fixed Travis configuration to publish and create documentation on release tags.
