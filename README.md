@@ -29,7 +29,7 @@ The library is based on [ChoicesJS][choicesjs], but it is not bundle along with 
 This dependency can be added to the bundle as external library, or it can just be added to the page via GitHub script:
 
 ```html
-<script src="https://rawgit.com/jshjohnson/Choices/v4.1.3/public/assets/scripts/choices.js"></script>
+<script src="https://rawgit.com/jshjohnson/Choices/v7.0.0/public/assets/scripts/choices.js"></script>
 ```
 
 ## Installation and running
@@ -94,6 +94,64 @@ Some of this component properties must be set via JavaScript (non primitive type
   ];
 
   element.disable();
+</script>
+```
+
+### Framework integration
+
+It is a good decision to create a wrapper of the Web Component to be ready to use by the application framework.
+
+The wrapper has to cover at least:
+
+- Properties:
+  - `type`: type of selector (see values in configuration section).
+  - `choices`: values to display in the selector.
+  - `name?`: name of the element (recommended).
+  - Other Web Component properties can be fixed or set dynamically.
+- Listeners:
+  - Changes on `choices` property to update the values of `choices` in the Web Component:
+  - `change` event of the Web Component to be able to propagate it.
+
+#### Example for VueJS framework
+
+```javascript
+// Loading ChoicesJS library and ChoicesJS Stencil Web Component
+import 'expose-loader?Choices!choices.js';
+import { defineCustomElements } from 'choicesjs-stencil/dist/loader';
+
+defineCustomElements(window);
+
+// VueJS component
+<template>
+  <choicesjs-stencil class="choicesjs-stencil"
+      :type="type"
+      :name="name"
+      ...
+  />
+</template>
+
+<script>
+export default {
+  props: [ 'type', 'name', 'choices' ],
+  watch: {
+    choices: {
+      immediate: true,
+      handler(newChoices, oldChoices) {
+        const select = this.$el;
+
+        if (select && oldChoices !== newChoices) {
+          select.choices = newChoices;
+        }
+      }
+    }
+  },
+  mounted() {
+    const select = this.$el;
+
+    select.choices = this.choices;
+    select.addEventListener('change', () => this.$emit('change'));
+  }
+};
 </script>
 ```
 
