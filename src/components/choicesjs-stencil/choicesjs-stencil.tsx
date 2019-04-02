@@ -1,10 +1,11 @@
-import { Component, Element, Event, EventEmitter, Method, Prop } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Method, Prop, JSXElements } from '@stencil/core';
 import {
   AjaxFn,
   ClassNames,
   FuseOptions,
   IChoicesProps,
   IChoicesMethods,
+  ItemFilterFn,
   NoResultsTextFn,
   NoChoicesTextFn,
   AddItemTextFn,
@@ -14,7 +15,7 @@ import {
   OnCreateTemplates,
   UniqueItemText
 } from './interfaces';
-import { createSelectOptions, filterObject, isDefined } from './utils';
+import { getValues, filterObject, isDefined } from './utils';
 
 @Component({
   tag: 'choicesjs-stencil',
@@ -44,7 +45,7 @@ export class ChoicesJSStencil implements IChoicesProps, IChoicesMethods {
   @Prop() public searchResultLimit: number;
   @Prop() public position: 'auto' | 'top' | 'bottom';
   @Prop() public resetScrollPosition: boolean;
-  @Prop() public regexFilter: RegExp;
+  @Prop() public addItemFilterFn: ItemFilterFn;
   @Prop() public shouldSort: boolean;
   @Prop() public shouldSortItems: boolean;
   @Prop() public sortFn: SortFn;
@@ -146,13 +147,6 @@ export class ChoicesJSStencil implements IChoicesProps, IChoicesMethods {
   }
 
   @Method()
-  public async toggleDropdown() {
-    this.choice.toggleDropdown();
-
-    return this;
-  }
-
-  @Method()
   public async getValue(valueOnly?: boolean): Promise<string | Array<string>> {
     return this.choice.getValue(valueOnly);
   }
@@ -174,6 +168,13 @@ export class ChoicesJSStencil implements IChoicesProps, IChoicesMethods {
   @Method()
   public async setChoices(choices: Array<any>, value: string, label: string, replaceChoices?: boolean) {
     this.choice.setChoices(choices, value, label, replaceChoices);
+
+    return this;
+  }
+
+  @Method()
+  public async clearChoices() {
+    this.choice.clearChoices();
 
     return this;
   }
@@ -239,13 +240,13 @@ export class ChoicesJSStencil implements IChoicesProps, IChoicesMethods {
     case 'single':
       this.element =
         <select { ...attributes }>
-          { this.value ? createSelectOptions(this.value) : null }
+          { this.value ? this.createSelectOptions(this.value) : null }
         </select>;
       break;
     case 'multiple':
       this.element =
         <select multiple { ...attributes }>
-          { this.value ? createSelectOptions(this.value) : null }
+          { this.value ? this.createSelectOptions(this.value) : null }
         </select>;
       break;
     case 'text':
@@ -279,7 +280,7 @@ export class ChoicesJSStencil implements IChoicesProps, IChoicesMethods {
       searchResultLimit: this.searchResultLimit,
       position: this.position,
       resetScrollPosition: this.resetScrollPosition,
-      regexFilter: this.regexFilter,
+      addItemFilterFn: this.addItemFilterFn,
       shouldSort: this.shouldSort,
       shouldSortItems: this.shouldSortItems,
       sortFn: this.sortFn,
@@ -315,5 +316,9 @@ export class ChoicesJSStencil implements IChoicesProps, IChoicesMethods {
       this.choice.destroy();
       this.choice = null;
     }
+  }
+
+  private createSelectOptions(values: string | Array<string>): Array<JSXElements.OptionHTMLAttributes<string>> {
+    return getValues(values).map((value) => <option value={ value }>{ value }</option>);
   }
 }

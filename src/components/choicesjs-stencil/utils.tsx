@@ -30,13 +30,13 @@ export function isDefined(value: any): boolean {
 }
 
 /**
- * Create the select options.
+ * Returns the list of values.
  *
- * @param value - List of values used as value and displayed text.
- * @returns List of option elements as JSX element.
+ * @param value - Value or list of values.
+ * @returns List of values.
  */
-export function createSelectOptions(value: string | Array<string>): Array<JSX.Element> {
-  const values = [].concat(typeof value === 'string' ? (value ? value.split(',') : []) : value);
-
-  return values.map((value) => <option value={ value }>{ value }</option>);
+export function getValues(value: string | Array<string>): Array<string> {
+  return typeof value !== 'undefined'
+    ? [].concat(typeof value === 'string' ? value.split(',') : value)
+    : [];
 }

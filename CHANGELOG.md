@@ -1,3 +1,13 @@
+# 1.3.0
+
+- Updated StencilJS core to v0.18.1.
+- Updated ChoicesJS to v7.0.0.
+  - `regexFilter` config has been replaced with `addItemFilterFn` function.
+  - `toggleDropdown` method has been removed.
+  - `clearChoices` method has been added.
+- Updated example with new options.
+- Updated documentation with example of framework integration.
+
 ## 1.2.1
 
 - Fixed Travis configuration to publish and create documentation on release tags.

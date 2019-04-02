@@ -59,6 +59,11 @@ export type FuseOptions = {
 };
 
 /**
+ * @link https://github.com/jshjohnson/Choices#additemfilterfn
+ */
+export type ItemFilterFn = (value: string) => boolean;
+
+/**
  * @link https://github.com/jshjohnson/Choices#noresultstext
  */
 export type NoResultsTextFn = () => string;
@@ -120,7 +125,7 @@ export interface IChoicesProps {
   fuseOptions?: FuseOptions;
   position?: 'auto' | 'top' | 'bottom';
   resetScrollPosition?: boolean;
-  regexFilter?: RegExp;
+  addItemFilterFn?: ItemFilterFn;
   shouldSort?: boolean;
   shouldSortItems?: boolean;
   placeholder?: boolean | string;
@@ -149,6 +154,8 @@ export type AjaxFn = (callback) => void;
  * @link https://github.com/jshjohnson/Choices#methods
  */
 export interface IChoicesMethods {
+  highlightItem(item: Element, runEvent?: boolean);
+  unhighlightItem(item: Element);
   highlightAll();
   unhighlightAll();
   removeActiveItemsByValue(value);
@@ -156,14 +163,14 @@ export interface IChoicesMethods {
   removeHighlightedItems();
   showDropdown();
   hideDropdown();
-  toggleDropdown();
-  setChoices(choices, value, label, replaceChoices);
   getValue(valueOnly);
   setValue(args);
   setChoiceByValue(value: string | Array<string>);
+  setChoices(choices, value, label, replaceChoices);
+  clearChoices();
   clearStore();
   clearInput();
-  disable();
   enable();
+  disable();
   ajax(fn: AjaxFn);
 }
