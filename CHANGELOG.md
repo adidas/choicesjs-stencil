@@ -1,3 +1,7 @@
+## 1.3.1
+
+- Fixed package registry.
+
 # 1.3.0
 
 - Updated StencilJS core to v0.18.1.
