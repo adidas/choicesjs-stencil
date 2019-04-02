@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://rawgit.com/jshjohnson/Choices/v4.1.3/public/assets/scripts/choices.js"></script>
+    <script src="https://rawgit.com/jshjohnson/Choices/v7.0.0/public/assets/scripts/choices.js"></script>
     <script src="dist/choicesjsstencil.js"></script>
     <style>
       html {
@@ -335,18 +335,17 @@
               </span>
               <input type="text" class="form-control" name="searchFields" value="[&quot;label&quot;, &quot;value&quot;]">
             </div>
-            <div class="form-group type type--text">
-              <label for="regexFilter">
-                Regex Filter
+            <div class="form-group">
+              <label for="addItemFilterFn">
+                addItemFilterFn(value) {
               </label>
-              <span class="description" data-toggle="tooltip" title="A filter that will need to pass for a user to successfully add an item.">
+              <span class="description" data-toggle="tooltip" title="Function to that will need to pass for a user to successfully add an item.">
                 <span class="glyphicon glyphicon glyphicon-question-sign"></span>
               </span>
-              <div class="input-group">
-                <span class="input-group-addon">/</span>
-                <input type="text" class="form-control" name="regexFilter">
-                <span class="input-group-addon">/</span>
-              </div>
+              <textarea class="form-control textarea--vertical" name="addItemFilterFn" rows="2">
+return /^[^\s]+$/.test(value);
+              </textarea>
+              <label for="addItemFilterFn">}</label>
             </div>
             <div class="form-group type type--single type--multiple">
               <label for="position">
@@ -483,7 +482,9 @@
               <span class="description" data-toggle="tooltip" title="Function to run once Choices initialises.">
                 <span class="glyphicon glyphicon glyphicon-question-sign"></span>
               </span>
-              <textarea class="form-control textarea--vertical" name="callbackOnInit" rows="2"></textarea>
+              <textarea class="form-control textarea--vertical" name="callbackOnInit" rows="2">
+console.info('ChoicesJS Stencil Web Component ready!');
+              </textarea>
               <label for="callbackOnInit">}</label>
             </div>
             <div class="form-group">
@@ -493,10 +494,12 @@
               <span class="description" data-toggle="tooltip" title="Function to run on template creation. Through this callback it is possible to provide custom templates for the various components of Choices (see terminology). For Choices to work with custom templates, it is important you maintain the various data attributes defined in the reference link below.">
                 <span class="glyphicon glyphicon glyphicon-question-sign"></span>
               </span>
-              <textarea class="form-control textarea--vertical" name="callbackOnCreateTemplates" rows="2"></textarea>
+              <textarea class="form-control textarea--vertical" name="callbackOnCreateTemplates" rows="2">
+return template;
+              </textarea>
               <label for="callbackOnCreateTemplates">}</label>
               <br/>
-              <a href="https://github.com/jshjohnson/Choices/blob/67f29c286aa21d88847adfcd6304dc7d068dc01f/assets/scripts/src/choices.js#L1993-L2067">
+              <a href="https://github.com/jshjohnson/Choices/blob/v7.0.0/public/assets/scripts/choices.js#L713-L788" target="_blank">
                 Templates reference
               </a>
             </div>
@@ -520,7 +523,11 @@ return a.label.localeCompare(b.label);
       <div class="container">
         <div class="row">
           <div class="col-md-12">
-            <p class="text-center pad-top">See full documentation in <a href="https://www.npmjs.com/package/choices.js">choices.js</a> npm package.</p>
+            <p class="text-center pad-top">
+              See full documentation in
+              <a href="https://www.npmjs.com/package/choices.js/v/7.0.0" target="_blank">choices.js</a>
+              npm package.
+            </p>
           </div>
         </div>
       </div>
@@ -603,7 +610,9 @@ return a.label.localeCompare(b.label);
               <h4 class="modal-title">Search options</h4>
           </div>
           <div class="modal-body">
-            <h5 class="text-center pad-bottom">See full Fuse documentation in <a href="https://github.com/krisk/Fuse/tree/v2.7.4#options">GitHub</a>.</h5>
+            <h5 class="text-center pad-bottom">
+              See full Fuse documentation in <a href="https://fusejs.io/" target="_blank">GitHub</a>.
+            </h5>
             <form name="custom-search-form">
               <div class="form-group">
                 <div class="row">
@@ -789,7 +798,9 @@ return a.label.localeCompare(b.label);
             choices: jsonParser,
             items: jsonParser,
             searchFields: jsonParser,
-            regexFilter: regexParser(),
+            addItemFilterFn: function(value) {
+              return new Function('value', value.trim());
+            },
             renderChoiceLimit: Number,
             maxItemCount: Number,
             searchFloor: Number,
