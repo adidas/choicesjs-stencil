@@ -35,7 +35,8 @@
     "choices.js": "^4.1"
   },
   "devDependencies": {
-    "@stencil/core": "0.16.0",
+    "@babel/plugin-syntax-dynamic-import": "7.2.0",
+    "@stencil/core": "0.17.0",
     "@stencil/sass": "0.1.1",
     "@stencil/utils": "0.0.5",
     "@types/jest": "21.1.8",
