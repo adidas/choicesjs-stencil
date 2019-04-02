@@ -43,6 +43,18 @@ describe('Utils', () => {
       expect(getValues(values)).toEqual(values);
     });
 
+    it('should return an array with an empty element if it is given as input', () => {
+      const values = '';
+
+      expect(getValues(values)).toEqual([ '' ]);
+    });
+
+    it('should return an array with the value given as string', () => {
+      const values = 'v1';
+
+      expect(getValues(values)).toEqual([ 'v1' ]);
+    });
+
     it('should return an array with the values of a comma separated string', () => {
       const values = 'v1,v2,v3';
 

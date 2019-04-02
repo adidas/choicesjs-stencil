@@ -37,6 +37,6 @@ export function isDefined(value: any): boolean {
  */
 export function getValues(value: string | Array<string>): Array<string> {
   return typeof value !== 'undefined'
-    ? [].concat(typeof value === 'string' ? (value ? value.split(',') : []) : value)
+    ? [].concat(typeof value === 'string' ? value.split(',') : value)
     : [];
 }
