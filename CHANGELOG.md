@@ -1,3 +1,9 @@
+# 1.4.0
+
+- Updated `@stencil/core` to version `1.5.4`.
+- Removed unnecessary event definitions.
+- Fixed method definitions: `highlightItem` and `unhighlightItem`.
+
 ## 1.3.1
 
 - Fixed package registry.

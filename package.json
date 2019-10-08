@@ -1,6 +1,6 @@
 {
   "name": "choicesjs-stencil",
-  "version": "1.3.1",
+  "version": "1.4.0",
   "description": "Select Web Component which wraps ChoicesJS library using StencilJS",
   "repository": {
     "type": "git",
