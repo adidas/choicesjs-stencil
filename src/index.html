@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <title>ChoicesJS Web Component (dev)</title>
     <script src="https://rawgit.com/jshjohnson/Choices/v7.0.0/public/assets/scripts/choices.js"></script>
-    <script src="/build/choicesjsstencil.js"></script>
+    <script type="module" src="/build/choicesjsstencil.esm.js"></script>
+    <script nomodule src="/build/choicesjsstencil.js"></script>
     <style>
       * {
         box-sizing: border-box;
@@ -121,6 +122,7 @@
           });
 
           valuesTextContainer.innerHTML = values.join(' | ');
+
           console.log('values', values);
 
           event.preventDefault();
