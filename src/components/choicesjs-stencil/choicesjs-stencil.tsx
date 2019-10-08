@@ -1,4 +1,5 @@
-import { Component, Element, Event, EventEmitter, Method, Prop, JSXElements } from '@stencil/core';
+import { h, Component, Element, Method, Prop } from '@stencil/core';
+import { HTMLStencilElement } from '@stencil/core/internal';
 import {
   AjaxFn,
   ClassNames,
@@ -67,31 +68,20 @@ export class ChoicesJSStencil implements IChoicesProps, IChoicesMethods {
   @Prop() public callbackOnInit: OnInit;
   @Prop() public callbackOnCreateTemplates: OnCreateTemplates;
 
-  @Event({ eventName: 'addItem' }) public addItemEvent: EventEmitter;
-  @Event({ eventName: 'removeItem' }) public removeItemEvent: EventEmitter;
-  @Event({ eventName: 'highlightItem' }) public highlightItemEvent: EventEmitter;
-  @Event({ eventName: 'unhighlightItem' }) public unhighlightItemEvent: EventEmitter;
-  @Event({ eventName: 'choice' }) public choiceEvent: EventEmitter;
-  @Event({ eventName: 'change' }) public changeEvent: EventEmitter;
-  @Event({ eventName: 'search' }) public searchEvent: EventEmitter;
-  @Event({ eventName: 'showDropdown' }) public showDropdownEvent: EventEmitter;
-  @Event({ eventName: 'hideDropdown' }) public hideDropdownEvent: EventEmitter;
-
-  @Element() public readonly passedElement: HTMLElement;
   @Element() private readonly root: HTMLElement;
 
   private choice;
   private element;
 
   @Method()
-  public async highlightItem(item: Element, runEvent?: boolean) {
+  public async highlightItem(item: HTMLElement, runEvent?: boolean) {
     this.choice.highlightItem(item, runEvent);
 
     return this;
   }
 
   @Method()
-  public async unhighlightItem(item: Element) {
+  public async unhighlightItem(item: HTMLElement) {
     this.choice.unhighlightItem(item);
 
     return this;
@@ -318,7 +308,7 @@ export class ChoicesJSStencil implements IChoicesProps, IChoicesMethods {
     }
   }
 
-  private createSelectOptions(values: string | Array<string>): Array<JSXElements.OptionHTMLAttributes<string>> {
+  private createSelectOptions(values: string | Array<string>): Array<HTMLStencilElement> {
     return getValues(values).map((value) => <option value={ value }>{ value }</option>);
   }
 }
