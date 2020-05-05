@@ -13,17 +13,17 @@ export type ClassNames = {
   item?: string;
   itemSelectable?: string;
   itemDisabled?: string;
-  itemOption?: string;
+  itemChoice?: string;
+  placeholder?: string;
   group?: string;
   groupHeading?: string;
-  placeholder?: string;
   button?: string;
   activeState?: string;
   focusState?: string;
   openState?: string;
   disabledState?: string;
   highlightedState?: string;
-  hiddenState?: string;
+  selectedState: string;
   flippedState?: string;
   loadingState?: string;
   noResults?: string;
@@ -39,27 +39,32 @@ export type WeightedField = {
 };
 
 /**
- * @link https://github.com/krisk/Fuse/tree/v2.7.4#options
+ * @version 3.4.6
+ * @link https://fusejs.io/api/options.html#basic-options
  */
 export type FuseOptions = {
+  id?: string;
   caseSensitive?: boolean;
-  minMatchCharLength?: number;
+  includeMatches?: boolean;
+  includeScore?: boolean;
   shouldSort?: boolean;
+  keys?: Array<string> | Array<object> | Array<WeightedField>;
+  verbose?: boolean;
   tokenize?: boolean;
   tokenSeparator?: RegExp;
   matchAllTokens?: boolean;
-  findAllMatches?: boolean;
-  verbose?: boolean;
-  id?: string;
-  keys?: Array<string> | Array<object> | Array<WeightedField>;
   location?: number;
-  threshold?: number;
   distance?: number;
+  threshold?: number;
   maxPatternLength?: number;
+  minMatchCharLength?: number;
+  findAllMatches?: boolean;
+  sortFn?(a: { score: number }, b: { score: number }): number;
+  getFn?(obj: any, path: string): any;
 };
 
 /**
- * @link https://github.com/jshjohnson/Choices#additemfilterfn
+ * @link https://github.com/jshjohnson/Choices#addItemFilter
  */
 export type ItemFilterFn = (value: string) => boolean;
 
@@ -89,7 +94,7 @@ export type MaxItemTextFn = (maxItemCount: number) => string;
 export type SortFn = (el1: any, el2: any) => number;
 
 export type UniqueItemText = ((value: string) => string) | string;
-
+export type CustomAddItemText = ((value: string) => string) | string;
 /**
  * @link https://github.com/jshjohnson/Choices#callbackoninit
  */
@@ -101,16 +106,22 @@ export type OnInit = () => void;
 export type OnCreateTemplates = (template) => any;
 
 /**
+ * @link https://github.com/jshjohnson/Choices#valuecomparer
+ */
+export type valueCompareFunction = (value1: string, value2: string) => boolean;
+
+/**
  * @link https://github.com/jshjohnson/Choices#configuration-options
  */
 export interface IChoicesProps {
   silent?: boolean;
   items?: Array<any>;
   choices?: Array<any>;
-  classNames?: ClassNames;
   renderChoiceLimit?: number;
   maxItemCount?: number;
   addItems?: boolean;
+  addItemFilter?: string | RegExp | ItemFilterFn | null;
+  addItemText?: string | AddItemTextFn;
   removeItems?: boolean;
   removeItemButton?: boolean;
   editItems?: boolean;
@@ -119,28 +130,30 @@ export interface IChoicesProps {
   paste?: boolean;
   searchEnabled?: boolean;
   searchChoices?: boolean;
-  searchFields?: Array<any> | string;
   searchFloor?: number;
   searchResultLimit?: number;
-  fuseOptions?: FuseOptions;
+  searchFields?: Array<any> | string;
   position?: 'auto' | 'top' | 'bottom';
   resetScrollPosition?: boolean;
-  addItemFilterFn?: ItemFilterFn;
   shouldSort?: boolean;
   shouldSortItems?: boolean;
+  sorter: SortFn;
   placeholder?: boolean | string;
-  placeholderValue?: string;
-  searchPlaceholderValue?: string;
-  prependValue?: string;
-  appendValue?: string;
+  placeholderValue?: string | null;
+  searchPlaceholderValue?: string | null;
+  prependValue?: string | null;
+  appendValue?: string | null;
   renderSelectedChoices?: 'always' | 'auto';
   loadingText?: string;
   noResultsText?: string | NoResultsTextFn;
   noChoicesText?: string | NoChoicesTextFn;
   itemSelectText?: string;
-  addItemText?: string | AddItemTextFn;
   maxItemText?: string | MaxItemTextFn;
-  sortFn?: SortFn;
+  uniqueItemText: UniqueItemText;
+  customAddItemText?: CustomAddItemText;
+  valueComparer?: valueCompareFunction;
+  classNames?: ClassNames;
+  fuseOptions?: FuseOptions;
   callbackOnInit?: OnInit;
   callbackOnCreateTemplates?: OnCreateTemplates;
 }
@@ -163,14 +176,13 @@ export interface IChoicesMethods {
   removeHighlightedItems();
   showDropdown();
   hideDropdown();
+  setChoices(choices, value, label, replaceChoices);
+  clearChoices();
   getValue(valueOnly);
   setValue(args);
   setChoiceByValue(value: string | Array<string>);
-  setChoices(choices, value, label, replaceChoices);
-  clearChoices();
   clearStore();
   clearInput();
-  enable();
   disable();
-  ajax(fn: AjaxFn);
+  enable();
 }

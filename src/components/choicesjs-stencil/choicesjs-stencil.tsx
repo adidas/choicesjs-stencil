@@ -14,8 +14,11 @@ import {
   SortFn,
   OnInit,
   OnCreateTemplates,
-  UniqueItemText
+  UniqueItemText,
+  valueCompareFunction,
+  CustomAddItemText
 } from './interfaces';
+import {} from 'choices.js';
 import { getValues, filterObject, isDefined } from './utils';
 
 @Component({
@@ -46,10 +49,9 @@ export class ChoicesJSStencil implements IChoicesProps, IChoicesMethods {
   @Prop() public searchResultLimit: number;
   @Prop() public position: 'auto' | 'top' | 'bottom';
   @Prop() public resetScrollPosition: boolean;
-  @Prop() public addItemFilterFn: ItemFilterFn;
   @Prop() public shouldSort: boolean;
   @Prop() public shouldSortItems: boolean;
-  @Prop() public sortFn: SortFn;
+  @Prop() public sorter: SortFn;
   @Prop() public placeholder: boolean | string;
   @Prop() public placeholderValue: string;
   @Prop() public searchPlaceholderValue: string;
@@ -65,8 +67,11 @@ export class ChoicesJSStencil implements IChoicesProps, IChoicesMethods {
   @Prop() public uniqueItemText: UniqueItemText;
   @Prop() public classNames: ClassNames;
   @Prop() public fuseOptions: FuseOptions;
+  @Prop() public addItemFilter?: string | RegExp | ItemFilterFn;
+  @Prop() public customAddItemText?: CustomAddItemText;
   @Prop() public callbackOnInit: OnInit;
   @Prop() public callbackOnCreateTemplates: OnCreateTemplates;
+  @Prop() public valueComparer: valueCompareFunction;
 
   @Element() private readonly root: HTMLElement;
 
@@ -270,10 +275,9 @@ export class ChoicesJSStencil implements IChoicesProps, IChoicesMethods {
       searchResultLimit: this.searchResultLimit,
       position: this.position,
       resetScrollPosition: this.resetScrollPosition,
-      addItemFilterFn: this.addItemFilterFn,
       shouldSort: this.shouldSort,
       shouldSortItems: this.shouldSortItems,
-      sortFn: this.sortFn,
+      sorter: this.sorter,
       placeholder: true,
       placeholderValue: this.placeholderValue || (typeof this.placeholder === 'string' && this.placeholder) || ' ',
       searchPlaceholderValue: this.searchPlaceholderValue,
@@ -290,7 +294,10 @@ export class ChoicesJSStencil implements IChoicesProps, IChoicesMethods {
       classNames: this.classNames,
       fuseOptions: this.fuseOptions,
       callbackOnInit: this.callbackOnInit,
-      callbackOnCreateTemplates: this.callbackOnCreateTemplates
+      callbackOnCreateTemplates: this.callbackOnCreateTemplates,
+      valueComparer: this.valueComparer,
+      addItemFilter: this.addItemFilter,
+      customAddItemText: this.customAddItemText
     };
     const settings = filterObject(props, isDefined);
 
