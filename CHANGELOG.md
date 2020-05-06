@@ -33,7 +33,6 @@
   - `workbox-build` to version `5.1.3`.
   - `fsevents` to version `2.1.3`. 
 - Rename `utils.tsx` to `utils.ts`
-- 
 
 # 1.4.0
 

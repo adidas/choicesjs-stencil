@@ -15,10 +15,9 @@ import {
   OnInit,
   OnCreateTemplates,
   UniqueItemText,
-  valueCompareFunction,
+  ValueCompareFunction,
   CustomAddItemText
 } from './interfaces';
-import {} from 'choices.js';
 import { getValues, filterObject, isDefined } from './utils';
 
 @Component({
@@ -67,11 +66,11 @@ export class ChoicesJSStencil implements IChoicesProps, IChoicesMethods {
   @Prop() public uniqueItemText: UniqueItemText;
   @Prop() public classNames: ClassNames;
   @Prop() public fuseOptions: FuseOptions;
-  @Prop() public addItemFilter?: string | RegExp | ItemFilterFn;
-  @Prop() public customAddItemText?: CustomAddItemText;
+  @Prop() public addItemFilter: string | RegExp | ItemFilterFn;
+  @Prop() public customAddItemText: CustomAddItemText;
   @Prop() public callbackOnInit: OnInit;
   @Prop() public callbackOnCreateTemplates: OnCreateTemplates;
-  @Prop() public valueComparer: valueCompareFunction;
+  @Prop() public valueComparer: ValueCompareFunction;
 
   @Element() private readonly root: HTMLElement;
 

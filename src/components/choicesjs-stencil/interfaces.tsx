@@ -108,7 +108,7 @@ export type OnCreateTemplates = (template) => any;
 /**
  * @link https://github.com/jshjohnson/Choices#valuecomparer
  */
-export type valueCompareFunction = (value1: string, value2: string) => boolean;
+export type ValueCompareFunction = (value1: string, value2: string) => boolean;
 
 /**
  * @link https://github.com/jshjohnson/Choices#configuration-options
@@ -151,7 +151,7 @@ export interface IChoicesProps {
   maxItemText?: string | MaxItemTextFn;
   uniqueItemText: UniqueItemText;
   customAddItemText?: CustomAddItemText;
-  valueComparer?: valueCompareFunction;
+  valueComparer?: ValueCompareFunction;
   classNames?: ClassNames;
   fuseOptions?: FuseOptions;
   callbackOnInit?: OnInit;
