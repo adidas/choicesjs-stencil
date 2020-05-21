@@ -29,7 +29,7 @@ The library is based on [ChoicesJS][choicesjs], but it is not bundle along with 
 This dependency can be added to the bundle as external library, or it can just be added to the page via GitHub script:
 
 ```html
-<script src="https://rawgit.com/jshjohnson/Choices/v7.0.0/public/assets/scripts/choices.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/choices.js@9.0.1/public/assets/scripts/choices.js"></script>
 ```
 
 ## Installation and running

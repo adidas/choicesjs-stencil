@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://rawgit.com/jshjohnson/Choices/v7.0.0/public/assets/scripts/choices.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/choices.js@9.0.1/public/assets/scripts/choices.js"></script>
     <script src="dist/choicesjsstencil.js"></script>
     <style>
       html {
@@ -85,10 +85,6 @@
             <div class="pull-left values-container">
               <p class="values-container__text"></p>
             </div>
-            <div class="form-group pull-right">
-              <button class="btn btn-primary" type="submit">Apply</button>
-              <button class="btn btn-default" type="reset">Reset</button>
-            </div>
           </div>
         </div>
         <div class="row">
@@ -102,6 +98,8 @@
                 <option value="single">Single</option>
                 <option value="multiple">Multiple</option>
               </select>
+              <button class="btn btn-primary" type="submit">Apply</button>
+              <button class="btn btn-default" type="reset">Reset</button>
               <div class="pull-right">
                 <button class="btn btn-info" type="button" data-toggle="modal" data-target="#customSearchModal">Search options</button>
                 <button class="btn btn-success" type="button" data-toggle="modal" data-target="#customStylesModal">Custom Styles</button>
@@ -499,7 +497,7 @@ return template;
               </textarea>
               <label for="callbackOnCreateTemplates">}</label>
               <br/>
-              <a href="https://github.com/jshjohnson/Choices/blob/v7.0.0/public/assets/scripts/choices.js#L713-L788" target="_blank">
+              <a href="https://github.com/jshjohnson/Choices/blob/v9.0.1/public/assets/scripts/choices.js#L2777-L2926" target="_blank">
                 Templates reference
               </a>
             </div>
@@ -525,7 +523,7 @@ return a.label.localeCompare(b.label);
           <div class="col-md-12">
             <p class="text-center pad-top">
               See full documentation in
-              <a href="https://www.npmjs.com/package/choices.js/v/7.0.0" target="_blank">choices.js</a>
+              <a href="https://www.npmjs.com/package/choices.js/v/9.0.1" target="_blank">choices.js</a>
               npm package.
             </p>
           </div>
@@ -579,7 +577,7 @@ return a.label.localeCompare(b.label);
     "openState": "is-open",
     "disabledState": "is-disabled",
     "highlightedState": "is-highlighted",
-    "hiddenState": "is-hidden",
+    "selectedState": "is-selected",
     "flippedState": "is-flipped",
     "loadingState": "is-loading",
     "noResults": "has-no-results",
@@ -623,6 +621,24 @@ return a.label.localeCompare(b.label);
                         <input type="checkbox" name="caseSensitive">
                       </label>
                       <span class="description" data-toggle="tooltip" title="Indicates whether comparisons should be case sensitive.">
+                        <span class="glyphicon glyphicon glyphicon-question-sign"></span>
+                      </span>
+                    </div>
+                    <div class="form-group">
+                      <label for="includeMatches">
+                        Include matches
+                        <input type="checkbox" name="includeMatches">
+                      </label>
+                      <span class="description" data-toggle="tooltip" title="Whether the matches should be included in the result set. When true, each record in the result set will include the indices of the matched characters. These can consequently be used for highlighting purposes.">
+                        <span class="glyphicon glyphicon glyphicon-question-sign"></span>
+                      </span>
+                    </div>
+                    <div class="form-group">
+                      <label for="includeScore">
+                        Include score
+                        <input type="checkbox" name="includeScore" checked disabled>
+                      </label>
+                      <span class="description" data-toggle="tooltip" title="Whether the score should be included in the result set. This option is mandatory, Choices.JS uses the score property by default.">
                         <span class="glyphicon glyphicon glyphicon-question-sign"></span>
                       </span>
                     </div>
@@ -671,6 +687,80 @@ return a.label.localeCompare(b.label);
                         <span class="glyphicon glyphicon glyphicon-question-sign"></span>
                       </span>
                     </div>
+                    <div class="form-group">
+                      <label for="sortFn">
+                        sortFn(a, b) {
+                      </label>
+                      <span class="description" data-toggle="tooltip" title="The function that will sort choices and items before they are displayed (unless a user is searching). By default choices and items are sorted by score.<br/><br/>The function takes two parameters: a, b.">
+                        <span class="glyphicon glyphicon glyphicon-question-sign"></span>
+                      </span>
+                      <textarea class="form-control textarea--vertical" name="sortFn" rows="2">
+return a.score - b.score;
+                      </textarea>
+                      <label for="sortFn">}</label>
+                    </div>
+                    <div class="form-group">
+                      <label for="getFn">
+                        getFn(obj, path) {
+                      </label>
+                      <span class="description" data-toggle="tooltip" title="The get function to use when fetching an object properties. The default will search nested paths *ie foo.bar.baz*">
+                        <span class="glyphicon glyphicon glyphicon-question-sign"></span>
+                      </span>
+                      <textarea class="form-control textarea--vertical" name="getFn" rows="8">
+var list = [];
+
+function baseToString(value) {
+  // Exit early for strings to avoid a performance hit in some environments.
+  if (typeof value == 'string') {
+    return value;
+  }
+
+  var result = (value + '');
+  return (result == '0' && (1 / value) == -INFINITY) ? '-0' : result;
+}
+
+function toString(value) {
+  return value == null ? '' : baseToString(value);
+}
+
+function _get(obj, path) {
+  if (!path) {
+    // If there's no path left, we've gotten to the object we care about.
+    list.push(obj);
+  } else {
+    var dotIndex = path.indexOf('.')
+    var key = path;
+    var remaining = null;
+
+    if (dotIndex !== -1) {
+      key = path.slice(0, dotIndex);
+      remaining = path.slice(dotIndex + 1);
+    }
+
+    var value = obj[key];
+
+    if (value !== null && value !== undefined) {
+      if (!remaining && (typeof value === 'string' || typeof value === 'number')) {
+        list.push(toString(value));
+      } else if (Array.isArray(value)) {
+        // Search each item in the array.
+        for (var i = 0, len = value.length; i < len; i += 1) {
+          _get(value[i], remaining);
+        }
+      } else if (remaining) {
+        // An object. Recurse further.
+        _get(value, remaining);
+      }
+    }
+  }
+}
+
+_get(obj, path);
+
+return list;
+                      </textarea>
+                      <label for="getFn">}</label>
+                    </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
@@ -712,6 +802,15 @@ return a.label.localeCompare(b.label);
                         <span class="glyphicon glyphicon glyphicon-question-sign"></span>
                       </span>
                       <input type="number" class="form-control" name="minMatchCharLength" value="1">
+                    </div>
+                    <div class="form-group">
+                      <label for="findAllMatches">
+                        Find all matches
+                        <input type="checkbox" name="findAllMatches">
+                      </label>
+                      <span class="description" data-toggle="tooltip" title="When true, the matching function will continue to the end of a search pattern even if a perfect match has already been located in the string.">
+                        <span class="glyphicon glyphicon glyphicon-question-sign"></span>
+                      </span>
                     </div>
                     <div class="form-group">
                       <label for="location">
@@ -852,7 +951,13 @@ return a.label.localeCompare(b.label);
             location: Number,
             threshold: Number,
             minMatchCharLength: Number,
-            maxPatternLength: Number
+            maxPatternLength: Number,
+            sortFn: function(value) {
+              return new Function('a', 'b', value.trim());
+            },
+            getFn: function(value) {
+              return new Function('obj', 'path', value.trim());
+            }
           });
 
           console.info('changeSearch', fields);
@@ -874,7 +979,7 @@ return a.label.localeCompare(b.label);
           var values = [];
           var i, lng;
 
-          // forEach is not available in all browsers
+          // FormData:forEach() is not available in all browsers
           if (typeof form.forEach === 'function') {
             form.forEach(function(value, name) {
               values.push(name + ': `' + value + '`') ;

@@ -31,7 +31,7 @@ export type ClassNames = {
 };
 
 /**
- * @link https://github.com/krisk/Fuse/tree/v2.7.4#weighted-search
+ * @link https://github.com/krisk/Fuse/blob/v3.6.1/src/typings.d.ts#L51
  */
 export type WeightedField = {
   [key: string]: any;
@@ -39,8 +39,8 @@ export type WeightedField = {
 };
 
 /**
- * @version 3.4.6
- * @link https://fusejs.io/api/options.html#basic-options
+ * @version 3.6.1
+ * @link https://github.com/krisk/Fuse/blob/v3.6.1/src/typings.d.ts#L43
  */
 export type FuseOptions = {
   id?: string;
