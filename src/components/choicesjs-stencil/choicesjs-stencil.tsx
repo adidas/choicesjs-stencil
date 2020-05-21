@@ -239,7 +239,7 @@ export class ChoicesJSStencil implements IChoicesProps, IChoicesMethods {
       break;
     case 'multiple':
       this.element =
-        <select multiple { ...attributes }>
+        <select { ...attributes } multiple>
           { this.value ? this.createSelectOptions(this.value) : null }
         </select>;
       break;
