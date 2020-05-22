@@ -1,7 +1,7 @@
 {
   "name": "choicesjs-stencil",
   "version": "1.5.0",
-  "description": "Select Web Component which wraps ChoicesJS library using StencilJS",
+  "description": "Select and multi-select Web Component using ChoicesJS library as core",
   "repository": {
     "type": "git",
     "url": "https://github.com/adidas/choicesjs-stencil.git"
