@@ -10,11 +10,33 @@
     <script src="dist/choicesjsstencil.js"></script>
     <style>
       html {
-        font-size: 14px;
-        margin-top: .5rem;
+        font-size: 16px;
       }
       body {
-        padding-bottom: 4rem;
+        padding-bottom: 3rem;
+      }
+      .header {
+        background-color: #000;
+        margin-bottom: 2rem;
+        height: 3.5rem;
+        display: flex;
+        align-items: center;
+      }
+      .header__left {
+        color: #fff;
+        font-weight: 700;
+        flex: 1 0 auto;
+      }
+      .header__left h2,
+      .header__left h3 {
+        margin: 0 .5rem;
+      }
+      .header__right .header__icon {
+        padding: .25rem;
+        display: block;
+      }
+      .header__right .header__icon img {
+        width: 3rem;
       }
       .select-container {
         display: inline-flex;
@@ -67,10 +89,18 @@
     <style id="customStyles"></style>
   </head>
   <body>
-    <div class="container-fluid">
-      <div class="row">
-        <h2 class="col-sm-12">ChoicesJS Web Component: test page</h2>
+    <header class="header">
+      <div class="header__left">
+        <h2 class="hidden-xs">ChoicesJS Web Component: test page</h2>
+        <h3 class="visible-xs">ChoicesJS Web Component</h3>
       </div>
+      <div class="header__right">
+        <a class="header__icon" href="https://github.com/adidas/choicesjs-stencil" target="blank" rel="noopener">
+          <img src="assets/github-logo-64x64.png">
+        </a>
+      </div>
+    </header>
+    <div class="container-fluid">
       <div class="row">
         <form class="col-sm-12 select-container" name="choicesjs-stencil-form">
           <choicesjs-stencil name="select" class="select"></choicesjs-stencil>
@@ -497,7 +527,9 @@ return template;
               </textarea>
               <label for="callbackOnCreateTemplates">}</label>
               <br/>
-              <a href="https://github.com/jshjohnson/Choices/blob/v9.0.1/public/assets/scripts/choices.js#L2777-L2926" target="_blank">
+              <a href="https://github.com/jshjohnson/Choices/blob/v9.0.1/public/assets/scripts/choices.js#L2777-L2926"
+                  target="_blank"
+                  rel="noopener">
                 Templates reference
               </a>
             </div>
@@ -523,7 +555,7 @@ return a.label.localeCompare(b.label);
           <div class="col-md-12">
             <p class="text-center pad-top">
               See full documentation in
-              <a href="https://www.npmjs.com/package/choices.js/v/9.0.1" target="_blank">choices.js</a>
+              <a href="https://www.npmjs.com/package/choices.js/v/9.0.1" target="_blank" rel="noopener">choices.js</a>
               npm package.
             </p>
           </div>
@@ -555,39 +587,40 @@ return a.label.localeCompare(b.label);
                 <div class="row">
                   <div class="col-md-6">
                     <textarea class="form-control textarea--fixed" name="classNames" rows="26">
-  {
-    "containerOuter": "choices",
-    "containerInner": "choices__inner",
-    "input": "choices__input",
-    "inputCloned": "choices__input--cloned",
-    "list": "choices__list",
-    "listItems": "choices__list--multiple",
-    "listSingle": "choices__list--single",
-    "listDropdown": "choices__list--dropdown",
-    "item": "choices__item",
-    "itemSelectable": "choices__item--selectable",
-    "itemDisabled": "choices__item--disabled",
-    "itemChoice": "choices__item--choice",
-    "placeholder": "choices__placeholder",
-    "group": "choices__group",
-    "groupHeading": "choices__heading",
-    "button": "choices__button",
-    "activeState": "is-active",
-    "focusState": "is-focused",
-    "openState": "is-open",
-    "disabledState": "is-disabled",
-    "highlightedState": "is-highlighted",
-    "selectedState": "is-selected",
-    "flippedState": "is-flipped",
-    "loadingState": "is-loading",
-    "noResults": "has-no-results",
-    "noChoices": "has-no-choices"
-  }
+{
+  "containerOuter": "choices",
+  "containerInner": "choices__inner",
+  "input": "choices__input",
+  "inputCloned": "choices__input--cloned",
+  "list": "choices__list",
+  "listItems": "choices__list--multiple",
+  "listSingle": "choices__list--single",
+  "listDropdown": "choices__list--dropdown",
+  "item": "choices__item",
+  "itemSelectable": "choices__item--selectable",
+  "itemDisabled": "choices__item--disabled",
+  "itemChoice": "choices__item--choice",
+  "placeholder": "choices__placeholder",
+  "group": "choices__group",
+  "groupHeading": "choices__heading",
+  "button": "choices__button",
+  "activeState": "is-active",
+  "focusState": "is-focused",
+  "openState": "is-open",
+  "disabledState": "is-disabled",
+  "highlightedState": "is-highlighted",
+  "selectedState": "is-selected",
+  "flippedState": "is-flipped",
+  "loadingState": "is-loading",
+  "noResults": "has-no-results",
+  "noChoices": "has-no-choices"
+}
                     </textarea>
                   </div>
                   <div class="col-md-6">
                     <textarea class="form-control textarea--fixed" name="styles" rows="26">
-  /* Add any custom classes for the component */
+/* Add any custom classes for the component */
+/* .choices__input { font-style: italic; } */
                     </textarea>
                   </div>
                 </div>
@@ -609,7 +642,7 @@ return a.label.localeCompare(b.label);
           </div>
           <div class="modal-body">
             <h5 class="text-center pad-bottom">
-              See full Fuse documentation in <a href="https://fusejs.io/" target="_blank">GitHub</a>.
+              See full Fuse documentation in <a href="https://fusejs.io/" target="_blank" rel="noopener">GitHub</a>.
             </h5>
             <form name="custom-search-form">
               <div class="form-group">

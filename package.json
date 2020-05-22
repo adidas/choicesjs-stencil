@@ -1,7 +1,7 @@
 {
   "name": "choicesjs-stencil",
-  "version": "1.5.0",
-  "description": "Select Web Component which wraps ChoicesJS library using StencilJS",
+  "version": "1.5.1",
+  "description": "Select and multi-select Web Component using ChoicesJS library as core",
   "repository": {
     "type": "git",
     "url": "https://github.com/adidas/choicesjs-stencil.git"
@@ -21,7 +21,7 @@
     "build": "npm run build:min",
     "build:dev": "stencil build --dev --watch",
     "build:min": "stencil build",
-    "copy:example": "copy ./index.html dist/* dist/**/* example",
+    "example": "copy ./index.html assets/* dist/* dist/**/* example",
     "doc": "typedoc --mode file --readme ./README.md --out ./docs ./src",
     "lint": "npm run lint:src && npm run lint:test",
     "lint:src": "tslint --config ./tslint.json --project ./tsconfig.json",

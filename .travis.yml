@@ -14,7 +14,7 @@ script:
 - if [[ $TRAVIS_TAG =~ $TAG_REGEX ]];
   then
     npm run doc;
-    npm run copy:example;
+    npm run example;
   fi
 
 deploy:

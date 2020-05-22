@@ -1,3 +1,10 @@
+## 1.5.1
+
+- Added ReactJS documentation.
+- Updated project description and documentation.
+- Updated demo adding repository link.
+- Fixed external links with `rel="noopener"`.
+
 # 1.5.0
 
 - Updated `choices.js` to version `9.0.1`.

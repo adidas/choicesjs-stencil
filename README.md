@@ -6,11 +6,13 @@
 
 # ChoicesJS Web Component
 
-Select component which just wraps [ChoicesJS][choicesjs] in a real [Web Component][web-component]. It has been created using [StencilJS][stenciljs], and written with [_Typescript_][typescript] and [_JSX_][jsx].
+Select and multi-select Web Component which transforms [ChoicesJS][choicesjs] library into a real [Web Component][web-component].
 
 This component allows the user to select from dropdowns, to browser between multiple options, to add tags to an input, etc.
 
 Play with it on the [**demo**][demo] page.
+
+It is built with [StencilJS][stenciljs], and written in [_Typescript_][typescript] and [_JSX_][jsx].
 
 ## Use cases
 
@@ -153,6 +155,56 @@ export default {
   }
 };
 </script>
+```
+
+#### Example for ReactJS framework
+
+```javascript
+// Loading ChoicesJS library and ChoicesJS Stencil Web Component
+import 'expose-loader?Choices!choices.js';
+import { defineCustomElements } from 'choicesjs-stencil/dist/loader';
+
+defineCustomElements(window);
+
+// ReactJS component
+import React, { useEffect, useRef } from 'react';
+
+export default function ChoicesJSStencil({
+  type = 'text',
+  name,
+  choices = [],
+  onChange
+}) {
+  const choicesElement = useRef(null);
+
+  useEffect(() => {
+    const { current } = choicesElement;
+    const _handleChange = handleChange.bind(null, onChange);
+
+    current.choices = choices;
+    current.addEventListener('change', _handleChange);
+
+    return () => {
+      current.removeEventListener('change', _handleChange);
+    };
+  }, [ choices ]);
+
+  async function handleChange(callback) {
+    const { current } = choicesElement;
+
+    callback({
+      options: await current.getValue(true),
+      target: current
+    });
+  }
+
+  return (
+    <choicesjs-stencil class="choicesjs-stencil"
+        ref={ choicesElement }
+        type={ type }
+        name={ name } />
+  );
+}
 ```
 
 ### Configuration
