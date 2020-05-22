@@ -21,7 +21,7 @@
     "build": "npm run build:min",
     "build:dev": "stencil build --dev --watch",
     "build:min": "stencil build",
-    "copy:example": "copy ./index.html dist/* dist/**/* example",
+    "example": "copy ./index.html assets/* dist/* dist/**/* example",
     "doc": "typedoc --mode file --readme ./README.md --out ./docs ./src",
     "lint": "npm run lint:src && npm run lint:test",
     "lint:src": "tslint --config ./tslint.json --project ./tsconfig.json",
