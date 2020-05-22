@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>ChoicesJS Web Component</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/choices.js@9.0.1/public/assets/scripts/choices.js"></script>
+    <script src="dist/choicesjsstencil.js"></script>
+    <style>
+      html {
+        font-size: 16px;
+      }
+      body {
+        padding-bottom: 3rem;
+      }
+      .header {
+        background-color: #000;
+        margin-bottom: 2rem;
+        height: 3.5rem;
+        display: flex;
+        align-items: center;
+      }
+      .header__left {
+        color: #fff;
+        font-weight: 700;
+        flex: 1 0 auto;
+      }
+      .header__left h2,
+      .header__left h3 {
+        margin: 0 .5rem;
+      }
+      .header__right .header__icon {
+        padding: .25rem;
+        display: block;
+      }
+      .header__right .header__icon img {
+        width: 3rem;
+      }
+      .select-container {
+        display: inline-flex;
+      }
+      .select-container .select {
+        position: relative;
+        width: 100%;
+        height: auto;
+      }
+      .select-container .btn {
+        margin-left: 1rem;
+      }
+      .container-fluid {
+        margin-bottom: 1rem;
+      }
+      .description {
+        cursor: help;
+      }
+      .pad-top {
+        padding-top: .5rem;
+      }
+      .pad-bottom {
+        padding-bottom: .5rem;
+      }
+      .textarea--fixed {
+        resize: none;
+      }
+      .textarea--vertical {
+        resize: vertical;
+      }
+      .form-control--inline {
+        display: inline-block;
+        width: auto;
+      }
+      .navbar {
+        min-height: auto;
+      }
+      .values-container {
+        background-color: #f9f9f9;
+        border-radius: 4px;
+        font-size: .85rem;
+        padding: .5rem;
+        margin-bottom: .5rem;
+      }
+      .values-container .values-container__text {
+        word-break: break-all;
+        margin: 0;
+      }
+    </style>
+    <style id="customStyles"></style>
+  </head>
+  <body>
+    <header class="header">
+      <div class="header__left">
+        <h2 class="hidden-xs">ChoicesJS Web Component: test page</h2>
+        <h3 class="visible-xs">ChoicesJS Web Component</h3>
+      </div>
+      <div class="header__right">
+        <a class="header__icon" href="https://github.com/adidas/choicesjs-stencil" target="blank" rel="noopener">
+          <img src="assets/github-logo-64x64.png">
+        </a>
+      </div>
+    </header>
+    <div class="container-fluid">
+      <div class="row">
+        <form class="col-sm-12 select-container" name="choicesjs-stencil-form">
+          <choicesjs-stencil name="select" class="select"></choicesjs-stencil>
+          <button class="btn btn-primary" type="submit">Submit</button>
+        </form>
+      </div>
+    </div>
+    <div class="container-fluid control-panel">
+      <form name="select-options-form">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="pull-left values-container">
+              <p class="values-container__text"></p>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="type">
+                Type
+              </label>
+              <select class="form-control form-control--inline" name="type">
+                <option value="text" selected>Text</option>
+                <option value="single">Single</option>
+                <option value="multiple">Multiple</option>
+              </select>
+              <button class="btn btn-primary" type="submit">Apply</button>
+              <button class="btn btn-default" type="reset">Reset</button>
+              <div class="pull-right">
+                <button class="btn btn-info" type="button" data-toggle="modal" data-target="#customSearchModal">Search options</button>
+                <button class="btn btn-success" type="button" data-toggle="modal" data-target="#customStylesModal">Custom Styles</button>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 type type--text">
+            <div class="form-group">
+              <label for="items">
+                Items
+              </label>
+              <span class="description" data-toggle="tooltip" title="Add pre-selected items (see terminology) to text input. Array of strings or objects.">
+                <span class="glyphicon glyphicon glyphicon-question-sign"></span>
+              </span>
+              <textarea class="form-control textarea--vertical" name="items" rows="5">
+[
+  "superstar",
+  "stansmith",
+  "gazelle",
+  "campus",
+  "zx500",
+  "samba",
+  "munchen",
+  "eqt",
+  "solar",
+  "terrex"
+]
+              </textarea>
+            </div>
+          </div>
+          <div class="col-md-12 type type--single type--multiple">
+            <div class="form-group">
+              <label for="choices">
+                Choices
+              </label>
+              <span class="description" data-toggle="tooltip" title="Add choices (see terminology) to select input. Array of objects.">
+                <span class="glyphicon glyphicon glyphicon-question-sign"></span>
+              </span>
+              <textarea class="form-control textarea--vertical" name="choices" rows="5">
+[
+  { "value": "superstar", "label": "Superstar", "selected": false, "disabled": false },
+  { "value": "adizero", "label": "adizero", "selected": false, "disabled": false },
+  { "value": "stansmith", "label": "Stan Smith", "selected": false, "disabled": false },
+  { "value": "gazelle", "label": "Gazelle", "selected": false, "disabled": false },
+  { "value": "ultraboost", "label": "ultraboost", "selected": false, "disabled": false },
+  { "value": "nmd", "label": "NMD", "selected": false, "disabled": false },
+  { "value": "yeezy", "label": "YEEZY", "selected": false, "disabled": false },
+  { "value": "campus", "label": "Campus", "selected": false, "disabled": false },
+  { "value": "zx500", "label": "ZX 500", "selected": false, "disabled": true },
+  { "value": "samba", "label": "Samba", "selected": false, "disabled": false },
+  { "value": "predator", "label": "Predator", "selected": false, "disabled": false },
+  { "value": "munchen", "label": "Munchen", "selected": false, "disabled": false },
+  { "value": "zxflux", "label": "ZX Flux", "selected": false, "disabled": false },
+  { "value": "eqt", "label": "EQT", "selected": false, "disabled": false },
+  { "value": "solar", "label": "Solar", "selected": false, "disabled": false },
+  { "value": "copa", "label": "Copa", "selected": false, "disabled": true },
+  { "value": "terrex", "label": "Terrex", "selected": false, "disabled": false },
+  { "value": "pureboost", "label": "pureboost", "selected": false, "disabled": false },
+  { "value": "dragon", "label": "Dragon", "selected": false, "disabled": false },
+  { "value": "yung", "label": "YUNG", "selected": false, "disabled": false },
+  { "value": "deerupt", "label": "Deerupt", "selected": false, "disabled": false },
+  { "value": "kamanda", "label": "kamanda", "selected": false, "disabled": false }
+]
+              </textarea>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-3 col-md-6 col-sm-12">
+            <div class="form-group">
+              <label for="silent">
+                Silent
+                <input type="checkbox" name="silent">
+              </label>
+              <span class="description" data-toggle="tooltip" title="Optionally suppress console errors and warnings.">
+                <span class="glyphicon glyphicon glyphicon-question-sign"></span>
+              </span>
+            </div>
+            <div class="form-group type type--text">
+              <label for="addItems">
+                Add items
+                <input type="checkbox" name="addItems" checked>
+              </label>
+              <span class="description" data-toggle="tooltip" title="Whether a user can add items.">
+                <span class="glyphicon glyphicon glyphicon-question-sign"></span>
+              </span>
+            </div>
+            <div class="form-group type type--text">
+              <label for="editItems">
+                Edit items
+                <input type="checkbox" name="editItems">
+              </label>
+              <span class="description" data-toggle="tooltip" title="Whether a user can edit items. An item's value can be edited by pressing the backspace.">
+                <span class="glyphicon glyphicon glyphicon-question-sign"></span>
+              </span>
+            </div>
+            <div class="form-group type type--text type--multiple">
+              <label for="removeItems">
+                Remove items
+                <input type="checkbox" name="removeItems" checked>
+              </label>
+              <span class="description" data-toggle="tooltip" title="Whether a user can remove items.">
+                <span class="glyphicon glyphicon glyphicon-question-sign"></span>
+              </span>
+            </div>
+            <div class="form-group">
+              <label for="removeItemButton">
+                Remove item button
+                <input type="checkbox" name="removeItemButton">
+              </label>
+              <span class="description" data-toggle="tooltip" title="Whether each item should have a remove button.">
+                <span class="glyphicon glyphicon glyphicon-question-sign"></span>
+              </span>
+            </div>
+            <div class="form-group type type--text type--multiple">
+              <label for="duplicateItemsAllowed">
+                Duplicate items
+                <input type="checkbox" name="duplicateItemsAllowed" checked>
+              </label>
+              <span class="description" data-toggle="tooltip" title="Whether each inputted/chosen item should be unique.">
+                <span class="glyphicon glyphicon glyphicon-question-sign"></span>
+              </span>
+            </div>
+            <div class="form-group type type--text type--multiple">
+              <label for="paste">
+                Paste
+                <input type="checkbox" name="paste" checked>
+              </label>
+              <span class="description" data-toggle="tooltip" title="Whether a user can paste into the input.">
+                <span class="glyphicon glyphicon glyphicon-question-sign"></span>
+              </span>
+            </div>
+            <div class="form-group type type--single">
+              <label for="searchEnabled">
+                Search enabled
+                <input type="checkbox" name="searchEnabled" checked>
+              </label>
+              <span class="description" data-toggle="tooltip" title="Whether a search area should be shown. Note: Multiple select boxes will always show search areas.">
+                <span class="glyphicon glyphicon glyphicon-question-sign"></span>
+              </span>
+            </div>
+            <div class="form-group type type--single">
+              <label for="searchChoices">
+                Search choices
+                <input type="checkbox" name="searchChoices" checked>
+              </label>
+              <span class="description" data-toggle="tooltip" title="Whether choices should be filtered by input or not. If false, the search event will still emit, but choices will not be filtered.">
+                <span class="glyphicon glyphicon glyphicon-question-sign"></span>
+              </span>
+            </div>
+            <div class="form-group type type--multiple">
+              <label for="resetScrollPosition">
+                Reset Scroll position
+                <input type="checkbox" name="resetScrollPosition" checked>
+              </label>
+              <span class="description" data-toggle="tooltip" title="Whether the scroll position should reset after adding an item.">
+                <span class="glyphicon glyphicon glyphicon-question-sign"></span>
+              </span>
+            </div>
+            <div class="form-group type type--single type--multiple">
+              <label for="shouldSort">
+                Should sort
+                <input type="checkbox" name="shouldSort">
+              </label>
+              <span class="description" data-toggle="tooltip" title="Whether choices and groups should be sorted. If false, choices/groups will appear in the order they were given.">
+                <span class="glyphicon glyphicon glyphicon-question-sign"></span>
+              </span>
+            </div>
+            <div class="form-group type type--text type--multiple">
+              <label for="shouldSortItems">
+                Should sort items
+                <input type="checkbox" name="shouldSortItems">
+              </label>
+              <span class="description" data-toggle="tooltip" title="Whether items should be sorted. If false, items will appear in the order they were selected.">
+                <span class="glyphicon glyphicon glyphicon-question-sign"></span>
+              </span>
+            </div>
+            <div class="form-group type type--text type--multiple">
+              <label for="placeholder">
+                Placeholder
+                <input type="checkbox" name="placeholder">
+              </label>
+              <span class="description" data-toggle="tooltip" title="Whether the input should show a placeholder. Used in conjunction with placeholderValue. If placeholder is set to true and no value is passed to placeholderValue, the passed input's placeholder attribute will be used as the placeholder value.">
+                <span class="glyphicon glyphicon glyphicon-question-sign"></span>
+              </span>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6 col-sm-12">
+            <div class="form-group type type--single type--multiple">
+              <label for="renderChoiceLimit">
+                Render Choice limit
+              </label>
+              <span class="description" data-toggle="tooltip" title="The amount of choices to be rendered within the dropdown list (&quot;-1&quot; indicates no limit). This is useful if you have a lot of choices where it is easier for a user to use the search area to find a choice.">
+                <span class="glyphicon glyphicon glyphicon-question-sign"></span>
+              </span>
+              <input type="number" class="form-control" name="renderChoiceLimit" value="-1">
+            </div>
+            <div class="form-group type type--text type--multiple">
+              <label for="maxItemCount">
+                Max Item count
+              </label>
+              <span class="description" data-toggle="tooltip" title="The amount of items a user can input/select (&quot;-1&quot; indicates no limit).">
+                <span class="glyphicon glyphicon glyphicon-question-sign"></span>
+              </span>
+              <input type="number" class="form-control" name="maxItemCount" value="-1">
+            </div>
+            <div class="form-group type type--single type--multiple">
+              <label for="searchFloor">
+                Search floor
+              </label>
+              <span class="description" data-toggle="tooltip" title="The minimum length a search value should be before choices are searched.">
+                <span class="glyphicon glyphicon glyphicon-question-sign"></span>
+              </span>
+              <input type="number" class="form-control" name="searchFloor" value="1">
+            </div>
+            <div class="form-group type type--single type--multiple">
+              <label for="searchResultLimit">
+                Search result limit
+              </label>
+              <span class="description" data-toggle="tooltip" title="The maximum amount of search results to show.">
+                <span class="glyphicon glyphicon glyphicon-question-sign"></span>
+              </span>
+              <input type="number" class="form-control" name="searchResultLimit" value="4">
+            </div>
+            <div class="form-group type type--single type--multiple">
+              <label for="searchFields">
+                Search fields
+              </label>
+              <span class="description" data-toggle="tooltip" title="Specify which fields should be used when a user is searching. If you have added custom properties to your choices, you can add these values thus: ['label', 'value', 'customProperties.example'].">
+                <span class="glyphicon glyphicon glyphicon-question-sign"></span>
+              </span>
+              <input type="text" class="form-control" name="searchFields" value="[&quot;label&quot;, &quot;value&quot;]">
+            </div>
+            <div class="form-group">
+              <label for="addItemFilterFn">
+                addItemFilterFn(value) {
+              </label>
+              <span class="description" data-toggle="tooltip" title="The function that will need to pass for a user to successfully add an item.">
+                <span class="glyphicon glyphicon glyphicon-question-sign"></span>
+              </span>
+              <textarea class="form-control textarea--vertical" name="addItemFilterFn" rows="2">
+return /^[^\s]+$/.test(value);
+              </textarea>
+              <label for="addItemFilterFn">}</label>
+            </div>
+            <div class="form-group type type--single type--multiple">
+              <label for="position">
+                Position
+              </label>
+              <span class="description" data-toggle="tooltip" title="Whether the dropdown should appear above (top) or below (bottom) the input. By default, if there is not enough space within the window the dropdown will appear above the input, otherwise below it.">
+                <span class="glyphicon glyphicon glyphicon-question-sign"></span>
+              </span>
+              <select class="form-control" name="position">
+                <option value="auto" selected>Auto</option>
+                <option value="top">Top</option>
+                <option value="bottom">Bottom</option>
+              </select>
+            </div>
+            <div class="form-group type type--single type--multiple">
+              <label for="renderSelectedChoices">
+                Render selected choices
+              </label>
+              <span class="description" data-toggle="tooltip" title="Whether selected choices should be removed from the list. By default choices are removed when they are selected in multiple select box. To always render choices pass always.">
+                <span class="glyphicon glyphicon glyphicon-question-sign"></span>
+              </span>
+              <select class="form-control" name="renderSelectedChoices">
+                <option value="auto" selected>Auto</option>
+                <option value="always">Always</option>
+              </select>
+            </div>
+            <div class="form-group type type--text">
+              <label for="delimiter">
+                Delimiter
+              </label>
+              <span class="description" data-toggle="tooltip" title="What divides each value. The default delimiter seperates each value with a comma: &quot;Value 1, Value 2, Value 3&quot;.">
+                <span class="glyphicon glyphicon glyphicon-question-sign"></span>
+              </span>
+              <input type="text" class="form-control" name="delimiter" value=",">
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6 col-sm-12">
+            <div class="form-group type type--text type--multiple">
+              <label for="placeholderValue">
+                Placeholder value
+              </label>
+              <span class="description" data-toggle="tooltip" title="The value of the inputs placeholder.">
+                <span class="glyphicon glyphicon glyphicon-question-sign"></span>
+              </span>
+              <input type="text" class="form-control" name="placeholderValue">
+            </div>
+            <div class="form-group type type--single">
+              <label for="searchPlaceholderValue">
+                Search Placeholder value
+              </label>
+              <span class="description" data-toggle="tooltip" title="The value of the search inputs placeholder.">
+                <span class="glyphicon glyphicon glyphicon-question-sign"></span>
+              </span>
+              <input type="text" class="form-control" name="searchPlaceholderValue">
+            </div>
+            <div class="form-group type type--single type--multiple">
+              <label for="loadingText">
+                Loading text
+              </label>
+              <span class="description" data-toggle="tooltip" title="The text that is shown whilst choices are being populated via AJAX.">
+                <span class="glyphicon glyphicon glyphicon-question-sign"></span>
+              </span>
+              <input type="text" class="form-control" name="loadingText" value="Loading...">
+            </div>
+            <div class="form-group type type--single type--multiple">
+              <label for="noResultsText">
+                No results text
+              </label>
+              <span class="description" data-toggle="tooltip" title="The text that is shown when a user's search has returned no results. Optionally pass a function returning a string.">
+                <span class="glyphicon glyphicon glyphicon-question-sign"></span>
+              </span>
+              <input type="text" class="form-control" name="noResultsText" value="No results found">
+            </div>
+            <div class="form-group type type--multiple">
+              <label for="noChoicesText">
+                No choices text
+              </label>
+              <span class="description" data-toggle="tooltip" title="The text that is shown when a user has selected all possible choices. Optionally pass a function returning a string.">
+                <span class="glyphicon glyphicon glyphicon-question-sign"></span>
+              </span>
+              <input type="text" class="form-control" name="noChoicesText" value="No choices to choose from">
+            </div>
+            <div class="form-group type type--single type--multiple">
+              <label for="itemSelectText">
+                Item select text
+              </label>
+              <span class="description" data-toggle="tooltip" title="The text that is shown when a user hovers over a selectable choice.">
+                <span class="glyphicon glyphicon glyphicon-question-sign"></span>
+              </span>
+              <input type="text" class="form-control" name="itemSelectText" value="Press to select">
+            </div>
+            <div class="form-group type type--text">
+              <label for="addItemText">
+                Add item text
+              </label>
+              <span class="description" data-toggle="tooltip" title="The text that is shown when a user has inputted a new item but has not pressed the enter key. To access the current input value, pass a function with a value argument (see the default config for an example), otherwise pass a string.">
+                <span class="glyphicon glyphicon glyphicon-question-sign"></span>
+              </span>
+              <input type="text" class="form-control" name="addItemText" value="Press Enter to add &quot;${value}&quot;">
+            </div>
+            <div class="form-group type type--text">
+              <label for="maxItemText">
+                Max item text
+              </label>
+              <span class="description" data-toggle="tooltip" title="The text that is shown when a user has focus on the input but has already reached the max item count. To access the max item count, pass a function with a maxItemCount argument (see the default config for an example), otherwise pass a string.">
+                <span class="glyphicon glyphicon glyphicon-question-sign"></span>
+              </span>
+              <input type="text" class="form-control" name="maxItemText" value="Only ${maxItemCount} values can be added.">
+            </div>
+            <div class="form-group">
+              <label for="prependValue">
+                Prepend value
+              </label>
+              <span class="description" data-toggle="tooltip" title="Prepend a value to each item added/selected.">
+                <span class="glyphicon glyphicon glyphicon-question-sign"></span>
+              </span>
+              <input type="text" class="form-control" name="prependValue">
+            </div>
+            <div class="form-group">
+              <label for="appendValue">
+                Append value
+              </label>
+              <span class="description" data-toggle="tooltip" title="Append a value to each item added/selected.">
+                <span class="glyphicon glyphicon glyphicon-question-sign"></span>
+              </span>
+              <input type="text" class="form-control" name="appendValue">
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6 col-sm-12">
+            <div class="form-group">
+              <label for="callbackOnInit">
+                callbackOnInit() {
+              </label>
+              <span class="description" data-toggle="tooltip" title="Function to run once Choices initialises.">
+                <span class="glyphicon glyphicon glyphicon-question-sign"></span>
+              </span>
+              <textarea class="form-control textarea--vertical" name="callbackOnInit" rows="2">
+console.info('ChoicesJS Stencil Web Component ready!');
+              </textarea>
+              <label for="callbackOnInit">}</label>
+            </div>
+            <div class="form-group">
+              <label for="callbackOnCreateTemplates">
+                callbackOnCreateTemplates(template) {
+              </label>
+              <span class="description" data-toggle="tooltip" title="Function to run on template creation. Through this callback it is possible to provide custom templates for the various components of Choices (see terminology). For Choices to work with custom templates, it is important you maintain the various data attributes defined in the reference link below.">
+                <span class="glyphicon glyphicon glyphicon-question-sign"></span>
+              </span>
+              <textarea class="form-control textarea--vertical" name="callbackOnCreateTemplates" rows="2">
+return template;
+              </textarea>
+              <label for="callbackOnCreateTemplates">}</label>
+              <br/>
+              <a href="https://github.com/jshjohnson/Choices/blob/v9.0.1/public/assets/scripts/choices.js#L2777-L2926"
+                  target="_blank"
+                  rel="noopener">
+                Templates reference
+              </a>
+            </div>
+            <div class="form-group type type--single type--multiple">
+              <label for="sortFn">
+                sortFn(a, b) {
+              </label>
+              <span class="description" data-toggle="tooltip" title="The function that will sort choices and items before they are displayed (unless a user is searching). By default choices and items are sorted by alphabetical order.<br/><br/>The function takes two parameters: a, b.">
+                <span class="glyphicon glyphicon glyphicon-question-sign"></span>
+              </span>
+              <textarea class="form-control textarea--vertical" name="sortFn" rows="2">
+return a.label.localeCompare(b.label);
+              </textarea>
+              <label for="sortFn">}</label>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <footer class="navbar navbar-default navbar-fixed-bottom">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <p class="text-center pad-top">
+              See full documentation in
+              <a href="https://www.npmjs.com/package/choices.js/v/9.0.1" target="_blank" rel="noopener">choices.js</a>
+              npm package.
+            </p>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <div class="modal fade" id="customStylesModal" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <h4 class="modal-title">Custom Styles</h4>
+          </div>
+          <div class="modal-body">
+            <form name="custom-styles-form">
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-md-12">
+                    <label for="classNames">
+                      Class names
+                    </label>
+                    <span class="description" data-toggle="tooltip" data-placement="right" title="Classes added to HTML generated by ChoicesJS. By default classnames follow the BEM notation.">
+                      <span class="glyphicon glyphicon glyphicon-question-sign"></span>
+                    </span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <textarea class="form-control textarea--fixed" name="classNames" rows="26">
+{
+  "containerOuter": "choices",
+  "containerInner": "choices__inner",
+  "input": "choices__input",
+  "inputCloned": "choices__input--cloned",
+  "list": "choices__list",
+  "listItems": "choices__list--multiple",
+  "listSingle": "choices__list--single",
+  "listDropdown": "choices__list--dropdown",
+  "item": "choices__item",
+  "itemSelectable": "choices__item--selectable",
+  "itemDisabled": "choices__item--disabled",
+  "itemChoice": "choices__item--choice",
+  "placeholder": "choices__placeholder",
+  "group": "choices__group",
+  "groupHeading": "choices__heading",
+  "button": "choices__button",
+  "activeState": "is-active",
+  "focusState": "is-focused",
+  "openState": "is-open",
+  "disabledState": "is-disabled",
+  "highlightedState": "is-highlighted",
+  "selectedState": "is-selected",
+  "flippedState": "is-flipped",
+  "loadingState": "is-loading",
+  "noResults": "has-no-results",
+  "noChoices": "has-no-choices"
+}
+                    </textarea>
+                  </div>
+                  <div class="col-md-6">
+                    <textarea class="form-control textarea--fixed" name="styles" rows="26">
+/* Add any custom classes for the component */
+/* .choices__input { font-style: italic; } */
+                    </textarea>
+                  </div>
+                </div>
+              </div>
+              <button class="btn btn-primary" type="submit">Apply</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="customSearchModal" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <h4 class="modal-title">Search options</h4>
+          </div>
+          <div class="modal-body">
+            <h5 class="text-center pad-bottom">
+              See full Fuse documentation in <a href="https://fusejs.io/" target="_blank" rel="noopener">GitHub</a>.
+            </h5>
+            <form name="custom-search-form">
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="caseSensitive">
+                        Case sensitive
+                        <input type="checkbox" name="caseSensitive">
+                      </label>
+                      <span class="description" data-toggle="tooltip" title="Indicates whether comparisons should be case sensitive.">
+                        <span class="glyphicon glyphicon glyphicon-question-sign"></span>
+                      </span>
+                    </div>
+                    <div class="form-group">
+                      <label for="includeMatches">
+                        Include matches
+                        <input type="checkbox" name="includeMatches">
+                      </label>
+                      <span class="description" data-toggle="tooltip" title="Whether the matches should be included in the result set. When true, each record in the result set will include the indices of the matched characters. These can consequently be used for highlighting purposes.">
+                        <span class="glyphicon glyphicon glyphicon-question-sign"></span>
+                      </span>
+                    </div>
+                    <div class="form-group">
+                      <label for="includeScore">
+                        Include score
+                        <input type="checkbox" name="includeScore" checked disabled>
+                      </label>
+                      <span class="description" data-toggle="tooltip" title="Whether the score should be included in the result set. This option is mandatory, Choices.JS uses the score property by default.">
+                        <span class="glyphicon glyphicon glyphicon-question-sign"></span>
+                      </span>
+                    </div>
+                    <div class="form-group">
+                      <label for="shouldSort">
+                        Sort
+                        <input type="checkbox" name="shouldSort" checked>
+                      </label>
+                      <span class="description" data-toggle="tooltip" title="Whether to sort the result list, by score.">
+                        <span class="glyphicon glyphicon glyphicon-question-sign"></span>
+                      </span>
+                    </div>
+                    <div class="form-group">
+                      <label for="tokenize">
+                        Tokenize
+                        <input type="checkbox" name="tokenize">
+                      </label>
+                      <span class="description" data-toggle="tooltip" title="When true, the algorithm will search individual words and the full string, computing the final score as a function of both. In this case, the threshold, distance, and location are inconsequential for individual tokens, and are thus ignored.">
+                        <span class="glyphicon glyphicon glyphicon-question-sign"></span>
+                      </span>
+                    </div>
+                    <div class="form-group">
+                      <label for="matchAllTokens">
+                        Match all tokens
+                        <input type="checkbox" name="matchAllTokens">
+                      </label>
+                      <span class="description" data-toggle="tooltip" title="When true, the result set will only include records that match all tokens. Will only work if tokenize is also true.">
+                        <span class="glyphicon glyphicon glyphicon-question-sign"></span>
+                      </span>
+                    </div>
+                    <div class="form-group">
+                      <label for="findAllMatches">
+                        Find all matches
+                        <input type="checkbox" name="findAllMatches">
+                      </label>
+                      <span class="description" data-toggle="tooltip" title="When true, the matching function will continue to the end of a search pattern even if a perfect match has already been located in the string.">
+                        <span class="glyphicon glyphicon glyphicon-question-sign"></span>
+                      </span>
+                    </div>
+                    <div class="form-group">
+                      <label for="verbose">
+                        Verbose
+                        <input type="checkbox" name="verbose">
+                      </label>
+                      <span class="description" data-toggle="tooltip" title="Will print to the console. Useful for debugging.">
+                        <span class="glyphicon glyphicon glyphicon-question-sign"></span>
+                      </span>
+                    </div>
+                    <div class="form-group">
+                      <label for="sortFn">
+                        sortFn(a, b) {
+                      </label>
+                      <span class="description" data-toggle="tooltip" title="The function that will sort choices and items before they are displayed (unless a user is searching). By default choices and items are sorted by score.<br/><br/>The function takes two parameters: a, b.">
+                        <span class="glyphicon glyphicon glyphicon-question-sign"></span>
+                      </span>
+                      <textarea class="form-control textarea--vertical" name="sortFn" rows="2">
+return a.score - b.score;
+                      </textarea>
+                      <label for="sortFn">}</label>
+                    </div>
+                    <div class="form-group">
+                      <label for="getFn">
+                        getFn(obj, path) {
+                      </label>
+                      <span class="description" data-toggle="tooltip" title="The get function to use when fetching an object properties. The default will search nested paths *ie foo.bar.baz*">
+                        <span class="glyphicon glyphicon glyphicon-question-sign"></span>
+                      </span>
+                      <textarea class="form-control textarea--vertical" name="getFn" rows="8">
+var list = [];
+
+function baseToString(value) {
+  // Exit early for strings to avoid a performance hit in some environments.
+  if (typeof value == 'string') {
+    return value;
+  }
+
+  var result = (value + '');
+  return (result == '0' && (1 / value) == -INFINITY) ? '-0' : result;
+}
+
+function toString(value) {
+  return value == null ? '' : baseToString(value);
+}
+
+function _get(obj, path) {
+  if (!path) {
+    // If there's no path left, we've gotten to the object we care about.
+    list.push(obj);
+  } else {
+    var dotIndex = path.indexOf('.')
+    var key = path;
+    var remaining = null;
+
+    if (dotIndex !== -1) {
+      key = path.slice(0, dotIndex);
+      remaining = path.slice(dotIndex + 1);
+    }
+
+    var value = obj[key];
+
+    if (value !== null && value !== undefined) {
+      if (!remaining && (typeof value === 'string' || typeof value === 'number')) {
+        list.push(toString(value));
+      } else if (Array.isArray(value)) {
+        // Search each item in the array.
+        for (var i = 0, len = value.length; i < len; i += 1) {
+          _get(value[i], remaining);
+        }
+      } else if (remaining) {
+        // An object. Recurse further.
+        _get(value, remaining);
+      }
+    }
+  }
+}
+
+_get(obj, path);
+
+return list;
+                      </textarea>
+                      <label for="getFn">}</label>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="id">
+                        ID
+                      </label>
+                      <span class="description" data-toggle="tooltip" title="The name of the identifier property. If specified, the returned result will be a list of the items' identifiers, otherwise it will be a list of the items.">
+                        <span class="glyphicon glyphicon glyphicon-question-sign"></span>
+                      </span>
+                      <input type="text" class="form-control" name="id">
+                    </div>
+                    <div class="form-group">
+                      <label for="keys">
+                        Keys
+                      </label>
+                      <span class="description" data-toggle="tooltip" title="List of properties that will be searched. This supports nested properties, weighted search, searching in arrays of strings and objects.">
+                        <span class="glyphicon glyphicon glyphicon-question-sign"></span>
+                      </span>
+                      <input type="text" class="form-control" name="keys" placeholder="[&quot;someKey&quot;, &quot;some.nested.key&quot;]" value="[&quot;label&quot;]">
+                    </div>
+                    <div class="form-group">
+                      <label for="tokenSeparator">
+                        Token separator
+                      </label>
+                      <span class="description" data-toggle="tooltip" title="Regex used to separate words when searching. Only applicable when tokenize is true.">
+                        <span class="glyphicon glyphicon glyphicon-question-sign"></span>
+                      </span>
+                      <div class="input-group">
+                        <span class="input-group-addon">/</span>
+                        <input type="text" class="form-control" name="tokenSeparator" value=" +">
+                        <span class="input-group-addon">/g</span>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="minMatchCharLength">
+                        Minimum character length
+                      </label>
+                      <span class="description" data-toggle="tooltip" title="When set to include matches, only the matches whose length exceeds this value will be returned. (For instance, if you want to ignore single character index returns, set to 2).">
+                        <span class="glyphicon glyphicon glyphicon-question-sign"></span>
+                      </span>
+                      <input type="number" class="form-control" name="minMatchCharLength" value="1">
+                    </div>
+                    <div class="form-group">
+                      <label for="findAllMatches">
+                        Find all matches
+                        <input type="checkbox" name="findAllMatches">
+                      </label>
+                      <span class="description" data-toggle="tooltip" title="When true, the matching function will continue to the end of a search pattern even if a perfect match has already been located in the string.">
+                        <span class="glyphicon glyphicon glyphicon-question-sign"></span>
+                      </span>
+                    </div>
+                    <div class="form-group">
+                      <label for="location">
+                        Location
+                      </label>
+                      <span class="description" data-toggle="tooltip" title="Determines approximately where in the text is the pattern expected to be found.">
+                        <span class="glyphicon glyphicon glyphicon-question-sign"></span>
+                      </span>
+                      <input type="number" class="form-control" name="location" value="0">
+                    </div>
+                    <div class="form-group">
+                      <label for="threshold">
+                        Threshold
+                      </label>
+                      <span class="description" data-toggle="tooltip" title="At what point does the match algorithm give up. A threshold of 0.0 requires a perfect match (of both letters and location), a threshold of 1.0 would match anything.">
+                        <span class="glyphicon glyphicon glyphicon-question-sign"></span>
+                      </span>
+                      <input type="number" class="form-control" name="threshold" value="0.6" step="0.1">
+                    </div>
+                    <div class="form-group">
+                      <label for="distance">
+                        Distance
+                      </label>
+                      <span class="description" data-toggle="tooltip" title="Determines how close the match must be to the fuzzy location (specified by location). An exact letter match which is distance characters away from the fuzzy location would score as a complete mismatch. A distance of 0 requires the match be at the exact location specified, a distance of 1000 would require a perfect match to be within 800 characters of the location to be found using a threshold of 0.8.">
+                        <span class="glyphicon glyphicon glyphicon-question-sign"></span>
+                      </span>
+                      <input type="number" class="form-control" name="distance" value="100">
+                    </div>
+                    <div class="form-group">
+                      <label for="maxPatternLength">
+                        Max pattern length
+                      </label>
+                      <span class="description" data-toggle="tooltip" title="The maximum length of the pattern. The longer the pattern (i.e. the search query), the more intensive the search operation will be. Whenever the pattern exceeds the maxPatternLength, an error will be thrown.">
+                        <span class="glyphicon glyphicon glyphicon-question-sign"></span>
+                      </span>
+                      <input type="number" class="form-control" name="maxPatternLength" value="32">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <button class="btn btn-primary" type="submit">Apply</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        function isDefined(value) {
+          return typeof value !== 'undefined';
+        }
+
+        function jsonParser(value) {
+          return value ? JSON.parse(value.trim()) : undefined;
+        }
+
+        function regexParser(flag) {
+          return function(value) {
+            new RegExp(value, flag);
+          };
+        }
+
+        function mapFormToFields(form, parsers) {
+          return Object.keys(form.elements).reduce(function(accum, next) {
+            var element = form.elements[next];
+            var key = element.name;
+            var parser = parsers[key];
+            var value = element.type === 'checkbox' ? !!element.checked : element.value;
+
+            if (parser && isDefined(value)) {
+              value = parser(value);
+            }
+
+            if (isDefined(value) && isDefined(key) && key !== '') {
+              accum[key] = value;
+            }
+
+            return accum;
+          }, {});
+        }
+
+        function changeConfiguration(form) {
+          var fields = mapFormToFields(form, {
+            choices: jsonParser,
+            items: jsonParser,
+            searchFields: jsonParser,
+            addItemFilterFn: function(value) {
+              return new Function('value', value.trim());
+            },
+            renderChoiceLimit: Number,
+            maxItemCount: Number,
+            searchFloor: Number,
+            searchResultLimit: Number,
+            addItemText: function(template) {
+              return function(value) {
+                return template.replace('${value}', value);
+              };
+            },
+            maxItemText: function(template) {
+              return function(maxItemCount) {
+                return template.replace('${maxItemCount}', maxItemCount);
+              };
+            },
+            sortFn: function(value) {
+              return new Function('a', 'b', value.trim());
+            },
+            callbackOnInit: function(value) {
+              return new Function(value.trim());
+            },
+            callbackOnCreateTemplates: function(value) {
+              return new Function('template', value.trim());
+            }
+          });
+
+          console.info('changeConfiguration', fields);
+
+          Object.keys(fields).forEach(function(key) {
+            window.select[key] = fields[key];
+          });
+        }
+
+        function changeStyles(form) {
+          var fields = mapFormToFields(form, {
+            classNames: jsonParser
+          });
+
+          console.info('changeStyles', fields);
+
+          window.select.classNames = fields.classNames;
+          customStyles.textContent = fields.styles.trim();
+        }
+
+        function changeSearch(form) {
+          var fields = mapFormToFields(form, {
+            keys: jsonParser,
+            tokenSeparator: regexParser('g'),
+            distance: Number,
+            location: Number,
+            threshold: Number,
+            minMatchCharLength: Number,
+            maxPatternLength: Number,
+            sortFn: function(value) {
+              return new Function('a', 'b', value.trim());
+            },
+            getFn: function(value) {
+              return new Function('obj', 'path', value.trim());
+            }
+          });
+
+          console.info('changeSearch', fields);
+
+          window.select.fuseOptions = fields;
+        }
+
+        function toggleTypeDependentSections(type) {
+          Array.from(typeDependencies).forEach(function(element) {
+            element.classList.contains('type--' + type) ?
+              element.classList.remove('hidden') :
+              element.classList.add('hidden');
+          });
+        }
+
+        function showValues(event) {
+          var valuesTextContainer = document.querySelector('.values-container p');
+          var form = new FormData(this);
+          var values = [];
+          var i, lng;
+
+          // FormData:forEach() is not available in all browsers
+          if (typeof form.forEach === 'function') {
+            form.forEach(function(value, name) {
+              values.push(name + ': `' + value + '`') ;
+            });
+          } else {
+            for (i = 0, lng = this.length; i < lng; i++) {
+              if (this[i].value) {
+                values.push(this[i].name + ': `' + this[i].value + '`');
+              }
+            }
+          }
+
+          valuesTextContainer.innerHTML = values.join(' | ');
+          console.log('values', values);
+
+          event.preventDefault();
+          event.stopImmediatePropagation();
+        }
+
+        function resetValues() {
+          document.querySelector('.values-container p').innerHTML = '';
+        }
+
+        function handleChangeOptions(event) {
+          var form = event.target;
+
+          event.preventDefault();
+          event.stopImmediatePropagation();
+
+          changeConfiguration(form);
+          resetValues();
+        }
+
+        function handleResetOptions() {
+          var form = event.target;
+
+          toggleTypeDependentSections('text');
+          resetValues();
+
+          // delay configuration changes until form sections are ready
+          setTimeout(function() {
+            changeConfiguration(form);
+          }, 0);
+        }
+
+        function handleChangeStyles(event) {
+          var form = event.target;
+
+          event.preventDefault();
+          event.stopImmediatePropagation();
+
+          changeStyles(form);
+        }
+
+        function handleChangeSearch(event) {
+          var form = event.target;
+
+          event.preventDefault();
+          event.stopImmediatePropagation();
+
+          changeSearch(form);
+        }
+
+        var events = [
+          'addItem', 'removeItem', 'highlightItem', 'unhighlightItem',
+          'choice', 'change', 'search', 'showDropdown', 'hideDropdown'
+        ];
+
+        var choicesjsStencilForm = document.querySelector('form[name=choicesjs-stencil-form]');
+        var selectOptionsForm = document.querySelector('form[name=select-options-form]');
+        var customStylesForm = document.querySelector('form[name=custom-styles-form]');
+        var customSearchForm = document.querySelector('form[name=custom-search-form]');
+        var customStyles = document.querySelector('#customStyles');
+        var typeSelect = document.querySelector('select[name="type"]');
+        var select = document.querySelector('choicesjs-stencil');
+        var typeDependencies = document.querySelectorAll('.type');
+
+        jQuery('[data-toggle="tooltip"]').tooltip({html: true});
+
+        typeSelect.onchange = function(event) {
+          var value = event.target.value;
+
+          toggleTypeDependentSections(value);
+        };
+
+        events.forEach(function(event) {
+          select.addEventListener(event, function(data) {
+            console.log(event, data.detail);
+          });
+        });
+
+        choicesjsStencilForm.onsubmit = showValues;
+        selectOptionsForm.onsubmit = handleChangeOptions;
+        selectOptionsForm.onreset = handleResetOptions;
+        customStylesForm.onsubmit = handleChangeStyles;
+        customSearchForm.onsubmit = handleChangeSearch;
+        window.select = select;
+
+        toggleTypeDependentSections('text');
+        changeConfiguration(selectOptionsForm);
+      });
+    </script>
+  </body>
+</html>
